@@ -1,0 +1,227 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Autodesk Forge Tutorial</title>
+  <meta charset="utf-8" />
+  <!-- Common packages: jQuery, Bootstrap, jsTree -->
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+<!-- Autodesk Forge Viewer files -->
+  <link rel="stylesheet" href="https://developer.api.autodesk.com/modelderivative/v2/viewers/style.min.css?v=v6.0" type="text/css">
+  <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/viewer3D.min.js?v=v6.0"></script>
+  <!-- this project files -->
+  <link href="css/main.css" rel="stylesheet" />
+  <script src="js/socket.io-1.0.0.js"></script> 
+  <script src="js/ForgeTree.js"></script>
+  <script src="js/ForgeViewer.js"></script>
+</head>
+
+<body>
+  <!-- Fixed navbar by Bootstrap: https://getbootstrap.com/examples/navbar-fixed-top/ -->
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+      <ul class="nav navbar-nav left col-lg-11">
+        <li>
+          <a href="http://developer.autodesk.com" target="_blank">
+            <img alt="Autodesk Forge" src="//developer.static.autodesk.com/images/logo_forge-2-line.png" height="20">
+          </a>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav right col-lg-1">
+        <div style="padding-top: 10px; text-align: right;">
+          <li>
+          <button class="btn btn-lg btn-default" id="autodeskSigninButton">Sign In &nbsp&nbsp
+            <img src="https://github.com/Autodesk-Forge/bim360appstore-data.management-nodejs-transfer.storage/raw/master/www/img/autodesk_text.png"
+                height="20"> 
+          </button>
+          <button class="btn btn-sm btn-default" id="signOut">Sign Out  &nbsp&nbsp<span id="userInfo" ></span>
+          </button>
+        </li>
+        </div>
+      </ul>    
+    </div>
+  </nav>
+  <!-- End of navbar -->
+  <div class="container-fluid fill">
+    <div class="row fill">
+      <div class="col-sm-3 fill">
+          <br/>
+        <div>
+          <label><h4>Source File/Folder</h4> </label>
+        </div>
+        <div class="panel panel-default fill">
+          <div class="panel-heading" data-toggle="tooltip" style="padding: 0px;">
+            <span id="refreshHubs" class="glyphicon glyphicon-refresh" style="cursor: pointer; display: none" title="Refresh list of files"></span>
+          </div>
+          <div id="userHubs">
+            <div style="padding-top: 100px; text-align: center;">
+              <br />
+              <br />
+              <br /> You may also need to provision your<br /> BIM 360 Docs account for this app.<br />
+              <a href="https://forge.autodesk.com/blog/bim-360-docs-provisioning-forge-apps">Learn more</a>.
+            </div>
+          </div>
+
+
+
+        </div>
+      </div>
+
+      <div class="col-sm-6 fill">
+
+        <div class="row">
+            <div style="padding-top: 10px; text-align: center;">
+                <h2>Revit File Upgrader Online</h2>
+
+            </div>
+            <br />
+
+          </div>
+  
+        <div class="row ">
+          <div style="padding-top: 10px; text-align: center;">
+
+            <!-- <div style="padding: 100px 100px 10px;"> -->
+            <form class="bs-example bs-example-form" role="form">
+              <div class="row">
+                <div class="col-lg-6">
+                    <div style="text-align: left;">
+                        <label>Same File in Destination:</label>
+                  </div>
+                  <div class="input-group">
+                    <span class="input-group-addon">
+                      <input type="radio" name='samefile' id='overrideRbx'>
+                    </span>
+                    <label class="form-control">Override</label>
+                    <!-- <input type="text" class="form-control"> -->
+                  </div><!-- /input-group -->
+                  <div class="input-group">
+                    <span class="input-group-addon">
+                      <input type="radio" name='samefile' id='ignoreRbx' checked>
+                    </span>
+                    <label class="form-control">Skip</label>
+                  </div><!-- /input-group -->
+                </div>
+                <div class="col-lg-6">
+                    <div style="text-align: left;">
+                        <label> Upgrade To: </label>
+                  </div>
+                  <div class="input-group">
+                      <span class="input-group-addon">
+                        <input type="radio" name='radio' id='upgrade2019Rbx' value='2019' checked>
+                      </span>
+                      <label class="form-control">Revit 2019</label>
+                    </div><!-- /input-group -->
+                    <div class="input-group">
+                    <span class="input-group-addon">
+                      <input type="radio" name='radio' id='upgrade2018Rbx' value='2018' >
+                    </span>
+                    <label class="form-control">Revit 2018</label>
+                  </div><!-- /input-group -->
+                </div>
+
+              </div><!-- /.row -->
+
+              <br />
+              <div class="row">
+                <div class="col-lg-4">
+                  <div class="input-group">
+                    <span class="input-group-addon">
+                      <input type="checkbox" id='supportRvtCbx' checked=true>
+                    </span>
+                    <label class="form-control">RVT</label>
+                  </div><!-- /input-group -->
+                </div>
+
+                <div class="col-lg-4">
+                  <div class="input-group">
+                    <span class="input-group-addon">
+                      <input type="checkbox" id='supportRfaCbx' checked=true>
+                    </span>
+                    <label class="form-control">RFA</label>
+                  </div><!-- /input-group -->
+                </div>
+                <div class="col-lg-4">
+                  <div class="input-group">
+                    <span class="input-group-addon">
+                      <input type="checkbox" id='supportRteCbx' checked=true>
+                    </span>
+                    <label class="form-control">RTE</label>
+                  </div><!-- /input-group -->
+                </div>
+              </div><!-- /.row -->
+            </form>
+            <!-- </div> -->
+            <br />
+            <br />
+
+
+
+            <div class="btn-group btn-group-lg">
+
+
+              <button class="btn btn-lg btn-default" id="upgradeBtn">
+                <span class="glyphicon glyphicon-play"></span>Upgrade
+              </button>
+              <button class="btn btn-lg btn-default" id="cancelBtn">
+                <span class="glyphicon glyphicon-stop"></span>Cancel
+              </button>
+            </div>
+            <br />
+          </div>
+        </div>
+
+        <div class="row">
+          <div style="padding-top: 10px; text-align: left;">
+            <label id="upgradeTitle">
+              <h4>Progress</h4>
+            </label>
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <div style="padding-top: 10px; overflow:auto; text-align: left; height: 550px; background-color: bisque">
+              <div class="list-group" id="logStatus">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <div id="forgeViewer"></div>
+            <div style="padding-top: 10px; text-align: center;">
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="col-sm-3 fill">
+        <br/>
+          <div>
+              <label><h4>Destination Folder</h4> </label>
+            </div>
+         <div class="panel panel-default fill">
+          <div class="panel-heading" data-toggle="tooltip" style="padding: 0px;">
+            <span id="refreshHubsRight" class="glyphicon glyphicon-refresh" style="cursor: pointer; display: none"
+              title="Refresh list of files"></span>
+          </div>
+
+          <div id="userHubsRight">
+            <div style="padding-top: 100px; text-align: center;">
+              <br />
+              <br />
+              <br /> You may also need to provision your<br /> BIM 360 Docs account for this app.<br />
+              <a href="https://forge.autodesk.com/blog/bim-360-docs-provisioning-forge-apps">Learn more</a>.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<iframe id="hiddenFrame" style="visibility: hidden; display: none" />
+</html>

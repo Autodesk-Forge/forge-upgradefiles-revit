@@ -117,7 +117,7 @@ function getWorkitemStatus(workItemId, access_token) {
 
         var options = {
             method: 'GET',
-            url: 'https://developer.api.autodesk.com/da/us-east/v3/workitems/' + workItemId,
+            url: designAutomation.revit_IO_Endpoint +'workitems/'+ workItemId,
             headers: {
                 Authorization: 'Bearer ' + access_token,
                 'Content-Type': 'application/json'
@@ -161,7 +161,7 @@ function cancelWrokitem(workItemId, access_token) {
 
         var options = {
             method: 'DELETE',
-            url: 'https://developer.api.autodesk.com/da/us-east/v3/workitems/' + workItemId,
+            url: designAutomation.revit_IO_Endpoint +'workitems/'+ workItemId,
             headers: {
                 Authorization: 'Bearer ' + access_token,
                 'Content-Type': 'application/json'
@@ -575,7 +575,7 @@ var upgradeFile = function (inputUrl, outputUrl, projectId, createVersionData, f
     
         var options = {
             method: 'POST',
-            url: 'https://developer.api.autodesk.com/da/us-east/v3/workitems',
+            url: designAutomation.revit_IO_Endpoint+'workitems',
             headers: {
                 Authorization: 'Bearer ' + access_token_2Legged.access_token,
                 'Content-Type': 'application/json'
@@ -628,7 +628,7 @@ var createPostWorkitemBody = function(inputUrl, outputUrl, fileExtension, access
     switch (fileExtension) {
         case 'rvt':
             body = {
-                activityId: 'revitiosample.FileUpgraderActivity+test',
+                activityId:  designAutomation.revit_IO_Nick_Name + '.'+designAutomation.revit_IO_Activity_Name,
                 arguments: {
                     rvtFile: {
                         url: inputUrl,
@@ -652,7 +652,7 @@ var createPostWorkitemBody = function(inputUrl, outputUrl, fileExtension, access
             break;
         case 'rfa':
             body = {
-                activityId: 'revitiosample.FileUpgraderActivity+test',
+                activityId:  designAutomation.revit_IO_Nick_Name + '.'+designAutomation.revit_IO_Activity_Name,
                 arguments: {
                     rvtFile: {
                         url: inputUrl,
@@ -676,7 +676,7 @@ var createPostWorkitemBody = function(inputUrl, outputUrl, fileExtension, access
             break;
         case 'rte':
             body = {
-                activityId: 'revitiosample.FileUpgraderActivity+test',
+                activityId:  designAutomation.revit_IO_Nick_Name + '.'+designAutomation.revit_IO_Activity_Name,
                 arguments: {
                     rvtFile: {
                         url: inputUrl,

@@ -22,7 +22,7 @@ This sample demostrated how to upgrade Revit file/family to the latest version u
 ![thumbnail](/public/res/thumbnail.png)
 
 # Live Demo
-[https://familycreationsample.herokuapp.com/](https://familycreationsample.herokuapp.com/)
+[https://fileupgradersample.herokuapp.com/](https://fileupgradersample.herokuapp.com/)
 
 # Setup
 

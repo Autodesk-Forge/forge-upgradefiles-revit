@@ -442,11 +442,6 @@ function prepareUserHubsTree( userHubs) {
     contextmenu: { items: (userHubs=='#sourceHubs'? autodeskCustomMenu: autodeskCustomMenuRight)},
     "state": { "key": "autodeskHubs" }// key restore tree state
   }).bind("activate_node.jstree", function (evt, data) {
-    if (data != null && data.node != null && data.node.type == 'versions') {
-      $("#forgeViewer").empty();
-      var urn = data.node.id;
-      launchViewer(urn);
-    }
   });
 }
 

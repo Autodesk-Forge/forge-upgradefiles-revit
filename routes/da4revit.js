@@ -17,6 +17,8 @@
 /////////////////////////////////////////////////////////////////////
 
 const express = require('express');
+const request = require("request");
+
 const {
     ProjectsApi, 
     ItemsApi,
@@ -47,13 +49,10 @@ const {
 } = require('forge-apis');
 
 const { OAuth } = require('./common/oauth');
+const { designAutomation }= require('../config');
 
-const request = require("request");
 
-// TBD: Change to your callback.
-const callbackUrl = 'http://0b30ebac.ngrok.io/api/forge/da4revit/callback';
-const hubBucketKey = 'wip.dm.prod';
-
+const AUTODESK_HUB_BUCKET_KEY = 'wip.dm.prod';
 const SOCKET_TOPIC_WORKITEM = 'Workitem-Notification';
 
 let router = express.Router();
@@ -63,17 +62,6 @@ var workitemList = [];
 
 // Middleware for obtaining a token for each request.
 router.use(async (req, res, next) => {
-    // // Get the access token
-    // const oauth = new OAuth(req.session);
-    // const oauth_client = oauth.get2LeggedClient();;
-    // const credentials = await oauth_client.authenticate();
-
-    // req.oauth_token = credentials;
-    // req.oauth_client = oauth_client;
-    // next();
-
-
-
     // Get the access token
     const oauth = new OAuth(req.session);
     let credentials = await oauth.getInternalToken();
@@ -456,7 +444,7 @@ var getNewCreatedStorageInfo = async function (projectId, folderId, fileName, oa
         console.log('storage id is not correct');
         return null;
     }
-    const storageUrl = "https://developer.api.autodesk.com/oss/v2/buckets/" + hubBucketKey + "/objects/" + strList[1];
+    const storageUrl = "https://developer.api.autodesk.com/oss/v2/buckets/" + AUTODESK_HUB_BUCKET_KEY + "/objects/" + strList[1];
     return {
         "StorageId": storage.body.data.id,
         "StorageUrl": storageUrl
@@ -657,7 +645,7 @@ var createPostWorkitemBody = function(inputUrl, outputUrl, fileExtension, access
                     },
                     onComplete: {
                         verb: "post",
-                        url: callbackUrl
+                        url: designAutomation.callback_Url
                     }
                 }
             };
@@ -681,7 +669,7 @@ var createPostWorkitemBody = function(inputUrl, outputUrl, fileExtension, access
                     },
                     onComplete: {
                         verb: "post",
-                        url: callbackUrl
+                        url: designAutomation.callback_Url
                     }
                 }
             };
@@ -705,7 +693,7 @@ var createPostWorkitemBody = function(inputUrl, outputUrl, fileExtension, access
                     },
                     onComplete: {
                         verb: "post",
-                        url: callbackUrl
+                        url: designAutomation.callback_Url
                     }
                 }
             };

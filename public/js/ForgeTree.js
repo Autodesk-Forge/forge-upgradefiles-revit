@@ -22,41 +22,43 @@ $(document).ready(function () {
     url: '/api/forge/oauth/token',
     success: function (res) {
       // yes, it is signed in...
-      $('#signOut').show();
+      $('#autodeskSignOutButton').show();
       $('#autodeskSigninButton').hide();
 
-      $('#refreshHubs').show();
+      $('#refreshSourceHubs').show();
       
       // add right panel
-      $('#refreshHubsRight').show();
+      $('#refreshDestinationHubs').show();
 
       // prepare sign out
-      $('#signOut').click(function () {
+      $('#autodeskSignOutButton').click(function () {
         $('#hiddenFrame').on('load', function (event) {
           location.href = '/api/forge/oauth/signout';
         });
         $('#hiddenFrame').attr('src', 'https://accounts.autodesk.com/Authentication/LogOut');
         // learn more about this signout iframe at
         // https://forge.autodesk.com/blog/log-out-forge
-
-        $('#signOut').hide();
-        $('#autodeskSigninButton').show();
       })
 
       // and refresh button
-      $('#refreshHubs').click(function () {
-        $('#userHubs').jstree(true).refresh();
+      $('#refreshSourceHubs').click(function () {
+        $('#sourceHubs').jstree(true).refresh();
       });
 
-      $('#refreshHubsRight').click(function () {
-        $('#userHubsRight').jstree(true).refresh();
+      $('#refreshDestinationHubs').click(function () {
+        $('#destinationHubs').jstree(true).refresh();
       });
 
       // finally:
-      prepareUserHubsTree( '#userHubs' );
-      prepareUserHubsTree( '#userHubsRight');
+      prepareUserHubsTree( '#sourceHubs' );
+      prepareUserHubsTree( '#destinationHubs');
       showUser();
+    },
+    error: function(err){
+      $('#autodeskSignOutButton').hide();
+      $('#autodeskSigninButton').show();
     }
+
   });
 
   $('#autodeskSigninButton').click(function () {
@@ -70,12 +72,12 @@ $(document).ready(function () {
 
 
   $('#upgradeBtn').click(async function () {
-    let sourceNode = $('#userHubs').jstree(true).get_selected(true)[0];
+    let sourceNode = $('#sourceHubs').jstree(true).get_selected(true)[0];
     if(sourceNode == null){
       alert('Can not get the selected source folder, please make sure you select a folder as source');
       return;
     }
-    destinatedNode  = $('#userHubsRight').jstree(true).get_selected(true)[0];
+    destinatedNode  = $('#destinationHubs').jstree(true).get_selected(true)[0];
     if(destinatedNode == null){
       alert('Can not get the destinate folder, please make sure you select a folder as destination');
       return;
@@ -155,13 +157,10 @@ const CancelIdEndfix = '-cancel';
 var workitemList = new Array();
 var destinatedNode  = null;
 var sourceNode      = null;
-//replace with your suitable topic names 
+
 const SOCKET_TOPIC_WORKITEM          = 'Workitem-Notification';
 
-//replace with your own website
-const baseurl = 'http://localhost:3000';
-
-socketio = io.connect(baseurl);
+socketio = io();
 socketio.on(SOCKET_TOPIC_WORKITEM, async (data)=>{
   console.log(data);
   updateListItem(data.WorkitemId, data.Status);
@@ -180,12 +179,12 @@ socketio.on(SOCKET_TOPIC_WORKITEM, async (data)=>{
     document.getElementById('upgradeTitle').innerHTML ="<h4>Upgrade Fully Completed!</h4>";
     // refresh the selected node
     if(sourceNode != null){
-      let instance = $('#userHubs').jstree(true);
+      let instance = $('#sourceHubs').jstree(true);
       instance.refresh_node(sourceNode);
       sourceNode = null;
     }
     if(destinatedNode != null ){
-      let instance = $('#userHubsRight').jstree(true);
+      let instance = $('#destinationHubs').jstree(true);
       instance.refresh_node(destinatedNode);
       destinatedNode = null;
     }
@@ -295,7 +294,7 @@ async function upgradeFolder(sourceNode, destinationNode) {
   if (destinationNode == null || destinationNode.type != 'folders')
     return false;
 
-  let instance = $("#userHubs").jstree(true);
+  let instance = $("#sourceHubs").jstree(true);
 
   let childrenDom = instance.get_children_dom(sourceNode);
 
@@ -440,7 +439,7 @@ function prepareUserHubsTree( userHubs) {
       }
     },
     "plugins": ["types", "state", "sort", "contextmenu"],
-    contextmenu: { items: (userHubs=='#userHubs'? autodeskCustomMenu: autodeskCustomMenuRight)},
+    contextmenu: { items: (userHubs=='#sourceHubs'? autodeskCustomMenu: autodeskCustomMenuRight)},
     "state": { "key": "autodeskHubs" }// key restore tree state
   }).bind("activate_node.jstree", function (evt, data) {
     if (data != null && data.node != null && data.node.type == 'versions') {
@@ -507,11 +506,11 @@ function autodeskCustomMenuRight(autodeskNode) {
         deleteFolder: {
           label: "Delete folder",
           action: async function () {
-            // var treeNode = $('#userHubs').jstree(true).get_selected(true)[0];
+            // var treeNode = $('#sourceHubs').jstree(true).get_selected(true)[0];
             try{
               await deleteFolder(autodeskNode);
               // refresh the parent node
-              let instance = $('#userHubsRight').jstree(true);
+              let instance = $('#destinationHubs').jstree(true);
               selectNode = instance.get_selected(true)[0];
               parentNode = instance.get_parent(selectNode);
               instance.refresh_node(parentNode);
@@ -572,7 +571,7 @@ async function createFolder(node) {
   }
 
   // refresh the node
-  let instance = $('#userHubsRight').jstree(true);
+  let instance = $('#destinationHubs').jstree(true);
   let selectNode = instance.get_selected(true)[0];
   instance.refresh_node(selectNode);
 }

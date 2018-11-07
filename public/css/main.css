@@ -12,18 +12,15 @@ body {
   margin-right: 30px;
 }
 
-#userHubs {
+#sourceHubs {
   overflow: auto;
   width: 100%;
   height: calc(100vh - 150px);
 }
 
-#userHubsRight {
+#destinationHubs {
   overflow: auto;
   width: 100%;
   height: calc(100vh - 150px);
 }
 
-#forgeViewer {
-  width: 100%;
-}

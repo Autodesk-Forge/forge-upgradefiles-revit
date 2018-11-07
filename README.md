@@ -9,12 +9,20 @@
 [![Data-Management](https://img.shields.io/badge/Data%20Management-v1-green.svg)](http://developer.autodesk.com/)
 [![OSS](https://img.shields.io/badge/OSS-v2-green.svg)](http://developer.autodesk.com/)
 [![Model-Derivative](https://img.shields.io/badge/Model%20Derivative-v2-green.svg)](http://developer.autodesk.com/)
+[![Design-Automation](https://img.shields.io/badge/Design%20Automation-v3-green.svg)](http://developer.autodesk.com/)
+[![BIM-360](https://img.shields.io/badge/BIM%20360-v1-green.svg)](http://developer.autodesk.com/)
 
 ![Intermediate](https://img.shields.io/badge/Level-Basic-green.svg)
 
 # Description
 
-This sample is part of the [Learn Forge](http://learnforge.autodesk.io) tutorials.
+This sample demostrated how to upgrade Revit file/family to the latest version using Design Automation for Revit API, including upgrade one file or one folder.
+
+# Thumbnail
+![thumbnail](/public/res/thumbnail.png)
+
+# Live Demo
+[https://familycreationsample.herokuapp.com/](https://familycreationsample.herokuapp.com/)
 
 # Setup
 
@@ -34,7 +42,7 @@ Install [NodeJS](https://nodejs.org), version 8 or newer.
 
 Clone this project or download it (this `nodejs` branch only). It's recommended to install [GitHub desktop](https://desktop.github.com/). To clone it via command line, use the following (**Terminal** on MacOSX/Linux, **Git Shell** on Windows):
 
-    git clone -b nodejs https://github.com/Autodesk-Forge/learn.forge.viewhubmodels.git
+    git clone -b nodejs https://github.com/JohnOnSoftware/design.automation.revit.create.family.nodejs.sample
 
 To run it, install the required packages, set the enviroment variables with your client ID & secret and finally start it. Via command line, navigate to the folder where this repository was cloned and use the following:
 
@@ -44,6 +52,7 @@ Mac OSX/Linux (Terminal)
     export FORGE_CLIENT_ID=<<YOUR CLIENT ID FROM DEVELOPER PORTAL>>
     export FORGE_CLIENT_SECRET=<<YOUR CLIENT SECRET>>
     export FORGE_CALLBACK_URL=<<YOUR CALLBACK URL>>
+    export FORGE_WORK_ITEM_CALLBACK_URL=<<YOUR WORKITEM CALLBACK URL>>
     npm start
 
 Windows (use **Node.js command line** from Start menu)
@@ -52,6 +61,7 @@ Windows (use **Node.js command line** from Start menu)
     set FORGE_CLIENT_ID=<<YOUR CLIENT ID FROM DEVELOPER PORTAL>>
     set FORGE_CLIENT_SECRET=<<YOUR CLIENT SECRET>>
     set FORGE_CALLBACK_URL=<<YOUR CALLBACK URL>>
+    set FORGE_WORK_ITEM_CALLBACK_URL=<<YOUR WORKITEM CALLBACK URL>>
     npm start
 
 Open the browser: [http://localhost:3000](http://localhost:3000).
@@ -64,6 +74,7 @@ The [Autodesk Forge](https://www.npmjs.com/package/forge-apis) packages is inclu
 
 Documentation:
 
+- [Design Automation API](https://forge.autodesk.com/en/docs/design-automation/v3/developers_guide/overview/)
 - [BIM 360 API](https://developer.autodesk.com/en/docs/bim360/v1/overview/) and [App Provisioning](https://forge.autodesk.com/blog/bim-360-docs-provisioning-forge-apps)
 - [Data Management API](https://developer.autodesk.com/en/docs/data/v2/overview/)
 - [Viewer](https://developer.autodesk.com/en/docs/viewer/v6)
@@ -86,10 +97,13 @@ After installing Github desktop for Windows, on the Git Shell, if you see a ***e
 
     git config --global http.sslverify "false"
 
+### Limitation
+
+
 ## License
 
 This sample is licensed under the terms of the [MIT License](http://opensource.org/licenses/MIT). Please see the [LICENSE](LICENSE) file for full details.
 
 ## Written by
 
-Petr Broz [@petrbroz](https://twitter.com/petrbroz), [Forge Partner Development](http://forge.autodesk.com)
+Zhong Wu, [Forge Partner Development](http://forge.autodesk.com)

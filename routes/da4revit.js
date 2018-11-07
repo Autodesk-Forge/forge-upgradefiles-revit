@@ -92,6 +92,17 @@ router.post('/da4revit/workitem/cancel', async(req, res, next) =>{
             'WorkitemId': workitemId,
             'Status': "Cancelled"
         };
+
+        const workitem = workitemList.find( (item) => {
+            return item.workitemId == workitemId;
+        } )
+        if( workitem == undefined ){
+            console.log('the workitem is not in the list')
+            return;
+        }
+        let index = workitemList.indexOf(workitem);
+        workitemList.splice(index, 1);
+
         global.socketio.emit(SOCKET_TOPIC_WORKITEM, workitemStatus);
         res.status(200).end(JSON.stringify(workitemRes.body));
     } catch (err) {
@@ -236,7 +247,7 @@ router.post('/da4revit/upgradeToFolder', async (req, res, next) => {
             return;
         }
         const inputUrl = versionInfo.versionUrl;
-        console.log('input url for DA4Revit: ' + inputUrl);
+        // console.log('input url for DA4Revit: ' + inputUrl);
 
         const items = new ItemsApi();
         const sourceFile = await items.getItem(sourceProjectId, sourceFileId, req.oauth_client, req.oauth_token);
@@ -265,7 +276,7 @@ router.post('/da4revit/upgradeToFolder', async (req, res, next) => {
             return;
         }
         const outputUrl = storageInfo.StorageUrl;
-        console.log('output url for DA4Revit: ' + outputUrl);
+        // console.log('output url for DA4Revit: ' + outputUrl);
 
         const createFirstVersionBody = createBodyOfPostItem(fileName, destinateFolderId, storageInfo.StorageId, itemType, versionInfo.versionType)
         if (createFirstVersionBody == null) {
@@ -509,7 +520,7 @@ router.post('/da4revit/upgrade', async (req, res, next) => {
             return;
         }
         const outputUrl = storageInfo.StorageUrl;
-        console.log('output url for DA4Revit: ' + outputUrl);
+        // console.log('output url for DA4Revit: ' + outputUrl);
 
 
         // get the storage of the input item version
@@ -520,7 +531,7 @@ router.post('/da4revit/upgrade', async (req, res, next) => {
             return;
         }
         const inputUrl = versionInfo.versionUrl;
-        console.log('input url for DA4Revit: ' + inputUrl);
+        // console.log('input url for DA4Revit: ' + inputUrl);
 
         const createVersionBody = createBodyOfPostVersion(resourceId,fileName, storageInfo.StorageId, versionInfo.versionType);
         if (createVersionBody == null ) {
@@ -709,42 +720,50 @@ router.post('/da4revit/callback', async (req, res, next) => {
         'Status': "Success"
     };
     if (req.body.status == 'success') {
+        const workitem = workitemList.find( (item) => {
+            return item.workitemId == req.body.id;
+        } )
+
+        if( workitem == undefined ){
+            console.log('the workitem is not in the list')
+            return;
+        }
+        let index = workitemList.indexOf(workitem);
         workitemStatus.Status = 'Success';
         global.socketio.emit(SOCKET_TOPIC_WORKITEM, workitemStatus);
-        // TBD, empty the list if length > 100 to save the memory.
-        workitemList.forEach(async (workitem, index) => {
-            if (workitem.workitemId == req.body.id) {
-                try {
-                    console.log("check the workitem");
-                    console.log(workitem);
-                    
-                    const type = workitem.createVersionData.data.type;
-                    let version = null;
-                    if(type == "versions"){
-                        const versions = new VersionsApi();
-                        version = await versions.postVersion(workitem.projectId, workitem.createVersionData, req.oauth_client, workitem.access_token_3Legged);
-                    }else{
-                        const items = new ItemsApi();
-                        version = await items.postItem(workitem.projectId, workitem.createVersionData, req.oauth_client, workitem.access_token_3Legged);
-                    }
-                    if( version == null || version.statusCode != 201 ){ 
-                        console.log('falied to create a new version of the file');
-                        global.socketio.emit(SOCKET_TOPIC_WORKITEM, workitemStatus);
-                        return;
-                    }
-                    workitemStatus.Status = 'Completed';
-                    global.socketio.emit(SOCKET_TOPIC_WORKITEM, workitemStatus);
 
-                    console.log('successfully created a new version of the file');
-                    return;
-                } catch (err) {
-                    console.log(err);
-                    workitemStatus.Status = 'Failed';
-                    global.socketio.emit(SOCKET_TOPIC_WORKITEM, workitemStatus);
-                    return;
-                }
+        console.log("check the workitem");
+        console.log(workitem);
+        
+        const type = workitem.createVersionData.data.type;
+        try {
+            let version = null;
+            if(type == "versions"){
+                const versions = new VersionsApi();
+                version = await versions.postVersion(workitem.projectId, workitem.createVersionData, req.oauth_client, workitem.access_token_3Legged);
+            }else{
+                const items = new ItemsApi();
+                version = await items.postItem(workitem.projectId, workitem.createVersionData, req.oauth_client, workitem.access_token_3Legged);
             }
-        });
+            if( version == null || version.statusCode != 201 ){ 
+                console.log('falied to create a new version of the file');
+                workitemStatus.Status = 'Failed'
+            }else{
+                console.log('successfully created a new version of the file');
+                workitemStatus.Status = 'Completed';
+            }
+            global.socketio.emit(SOCKET_TOPIC_WORKITEM, workitemStatus);
+
+        } catch (err) {
+            console.log(err);
+            workitemStatus.Status = 'Failed';
+            global.socketio.emit(SOCKET_TOPIC_WORKITEM, workitemStatus);
+        }
+        finally{
+            // Remove the workitem after it's done
+            workitemList.splice(index, 1);
+        }
+
     }else{
         // Report if not successful.
         workitemStatus.Status = 'Failed';

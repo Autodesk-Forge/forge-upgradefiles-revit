@@ -247,7 +247,6 @@ router.post('/da4revit/upgradeToFolder', async (req, res, next) => {
             return;
         }
         const inputUrl = versionInfo.versionUrl;
-        // console.log('input url for DA4Revit: ' + inputUrl);
 
         const items = new ItemsApi();
         const sourceFile = await items.getItem(sourceProjectId, sourceFileId, req.oauth_client, req.oauth_token);
@@ -276,7 +275,6 @@ router.post('/da4revit/upgradeToFolder', async (req, res, next) => {
             return;
         }
         const outputUrl = storageInfo.StorageUrl;
-        // console.log('output url for DA4Revit: ' + outputUrl);
 
         const createFirstVersionBody = createBodyOfPostItem(fileName, destinateFolderId, storageInfo.StorageId, itemType, versionInfo.versionType)
         if (createFirstVersionBody == null) {
@@ -520,7 +518,6 @@ router.post('/da4revit/upgrade', async (req, res, next) => {
             return;
         }
         const outputUrl = storageInfo.StorageUrl;
-        // console.log('output url for DA4Revit: ' + outputUrl);
 
 
         // get the storage of the input item version
@@ -531,7 +528,6 @@ router.post('/da4revit/upgrade', async (req, res, next) => {
             return;
         }
         const inputUrl = versionInfo.versionUrl;
-        // console.log('input url for DA4Revit: ' + inputUrl);
 
         const createVersionBody = createBodyOfPostVersion(resourceId,fileName, storageInfo.StorageId, versionInfo.versionType);
         if (createVersionBody == null ) {

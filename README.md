@@ -98,7 +98,8 @@ After installing Github desktop for Windows, on the Git Shell, if you see a ***e
     git config --global http.sslverify "false"
 
 ### Limitation
-
+- Only support upgrading to Revit 2019.
+- Override is not implemented yet. 
 
 ## License
 

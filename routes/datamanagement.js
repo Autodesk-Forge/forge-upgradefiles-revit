@@ -19,11 +19,11 @@
 const express = require('express');
 const { HubsApi, ProjectsApi, FoldersApi, ItemsApi } = require('forge-apis');
 
-const { OAuth } = require('./common/oauth');
+const { OAuth } = require('./common/oauthImp');
 
 let router = express.Router();
 
-router.get('/datamanagement', async (req, res) => {
+router.get('/datamanagement/v1', async (req, res) => {
     // The id querystring parameter contains what was selected on the UI tree, make sure it's valid
     const href = decodeURIComponent(req.query.id);
     if (href === '') {
@@ -68,16 +68,16 @@ router.get('/datamanagement', async (req, res) => {
 });
 
 // delete a folder
-router.post('/datamanagement/folder/delete', async (req, res )=>{
-    const href = decodeURIComponent(req.body.id);
-    if (href === '' || href == null) {
-        res.status(500).end();
+router.delete('/datamanagement/v1/folder/:folderurl', async (req, res )=>{
+    const href = req.params.folderurl;
+    if (href === '' || href === null) {
+        res.status(400).end('the folder url is not specified');
         return;
     }
 
     const params = href.split('/');
     if(params.length < 3 ){
-        res.status(500).end('info: the ');
+        res.status(400).end('the folder url is not in correct format ');
         return;
     }
     const projectId = params[params.length-3];
@@ -99,22 +99,39 @@ router.post('/datamanagement/folder/delete', async (req, res )=>{
         body: '{ "jsonapi": {"version": "1.0" },"data": {"type": "folders","id": "'+folderId+'","attributes": {"hidden":true}}}'
     };
     request(options, function (error, response, body) {
-      if (error) {
-        console.log(error);
-        res.status(500).end('failed to delete the file');
-        return;
-      }else{
-        // console.log(body);
-        res.status(200).end('file is deleted');
-      }
+        if (error) {
+            console.log(error);
+            res.status(500).end('failed to delete the file');
+
+        } else {
+            let resp;
+            try {
+                resp = JSON.parse(body)
+            } catch (e) {
+                resp = body
+            }
+            if (response.statusCode >= 400) {
+                console.log('error code: ' + response.statusCode + ' response message: ' + response.statusMessage);
+                res.status(500).end({
+                    statusCode: response.statusCode,
+                    statusMessage: response.statusMessage
+                });
+            } else {
+                res.status(200).end(JSON.stringify({
+                    statusCode: response.statusCode,
+                    headers: response.headers,
+                    body: resp
+                }))
+            }
+        }
     });
 })
 
 // create a subfolder
-router.post('/datamanagement/folder', async (req, res) =>{
-    const href = decodeURIComponent(req.body.id);
-    const folderName = decodeURIComponent(req.body.name);
-    if (href === '' || folderName == '') {
+router.post('/datamanagement/v1/folder', async (req, res) =>{
+    const href          = req.body.id;
+    const folderName    = req.body.name;
+    if (href === '' || folderName === '') {
         res.status(500).end();
         return;
     }
@@ -131,7 +148,7 @@ router.post('/datamanagement/folder', async (req, res) =>{
     }
 
     const resourceName = params[params.length - 2];
-    if (resourceName != 'folders') {
+    if (resourceName !== 'folders') {
         res.status(500).end('not supported item');
         return;
     }

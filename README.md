@@ -66,6 +66,25 @@ Windows (use **Node.js command line** from Start menu)
 
 Open the browser: [http://localhost:3000](http://localhost:3000).
 
+## Main Backend API used
+### File upgrade API based on Design Automation API
+- POST      /api/forge/da4revit/v1/upgrader/files/:sourcefileurl/folders/:destinatefolderurl
+
+- POST      /api/forge/da4revit/v1/upgrader/files
+
+- GET       /api/forge/da4revit/v1/upgrader/files/:fileworkitemid
+
+- DELETE    /api/forge/da4revit/v1/upgrader/files/:fileworkitemid
+
+- POST      /api/forge/da4revit/callback
+This endpoint is a webhook that would be invoked by the Design Automation API, 
+you need to use ngrok to configure your Local Server for testing, please [WebHooks](https://forge.autodesk.com/en/docs/webhooks/v1/tutorials/configuring-your-server/) for details. 
+
+### File/Folder operation API based on Data Management API
+- POST      /api/forge/datamanagement/v1/folder
+- DELETE    /api/forge//datamanagement/v1/folder/:folderurl
+- GET       /api/forge/datamanagement/v1
+
 ## Packages used
 
 The [Autodesk Forge](https://www.npmjs.com/package/forge-apis) packages is included by default. Some other non-Autodesk packaged are used, including [express](https://www.npmjs.com/package/express) and [multer](https://www.npmjs.com/package/multer) for upload.
@@ -73,6 +92,7 @@ The [Autodesk Forge](https://www.npmjs.com/package/forge-apis) packages is inclu
 # Further Reading
 
 Documentation:
+- This sample is based on [Learn Forge Tutorial](https://github.com/Autodesk-Forge/learn.forge.viewhubmodels/tree/nodejs), please check details there about the basic framework if you are not familar. 
 
 - [Design Automation API](https://forge.autodesk.com/en/docs/design-automation/v3/developers_guide/overview/)
 - [BIM 360 API](https://developer.autodesk.com/en/docs/bim360/v1/overview/) and [App Provisioning](https://forge.autodesk.com/blog/bim-360-docs-provisioning-forge-apps)
@@ -100,6 +120,7 @@ After installing Github desktop for Windows, on the Git Shell, if you see a ***e
 ### Limitation
 - Only support upgrading to Revit 2019.
 - Override is not implemented yet. 
+- Need to open the source folder to list all the files first
 
 ## License
 

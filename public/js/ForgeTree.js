@@ -49,7 +49,6 @@ $(document).ready(function () {
         $('#destinationHubs').jstree(true).refresh();
       });
 
-      // finally:
       prepareUserHubsTree( '#sourceHubs' );
       prepareUserHubsTree( '#destinationHubs');
       showUser();
@@ -58,7 +57,6 @@ $(document).ready(function () {
       $('#autodeskSignOutButton').hide();
       $('#autodeskSigninButton').show();
     }
-
   });
 
   $('#autodeskSigninButton').click(function () {
@@ -73,20 +71,28 @@ $(document).ready(function () {
 
   $('#upgradeBtn').click(async function () {
     let sourceNode = $('#sourceHubs').jstree(true).get_selected(true)[0];
-    if(sourceNode == null){
+    if(sourceNode === null){
       alert('Can not get the selected source folder, please make sure you select a folder as source');
       return;
     }
     destinatedNode  = $('#destinationHubs').jstree(true).get_selected(true)[0];
-    if(destinatedNode == null){
+    if(destinatedNode === null){
       alert('Can not get the destinate folder, please make sure you select a folder as destination');
       return;
     }
 
-    if(sourceNode.type != 'folders' || destinatedNode.type != 'folders'){
+    if(sourceNode.type !== 'folders' || destinatedNode.type !== 'folders'){
       alert('Currently only support upgrading files from folder to folder, please make sure select folder as source and destination.');
       return;
     }
+
+    // TBD: use the current selection of version & action
+    bUpgrade2019 =  $('input[name="upgradeToVersion"]:checked').val() === '2019';
+    bIgnore      =  $('input[name="fileExisted"]:checked').val() === 'skip';
+
+    bSupportRvt = $('#supportRvtCbx')[0].checked;
+    bSupportRfa = $('#supportRfaCbx')[0].checked;
+    bSupportRte = $('#supportRteCbx')[0].checked;
 
     // remove items if any.
     let logList = document.getElementById('logStatus');
@@ -104,38 +110,6 @@ $(document).ready(function () {
     await upgradeFolder(sourceNode, destinatedNode);
     document.getElementById('upgradeTitle').innerHTML ="<h4>Creating versions in BIM360...</h4>";
   });
-  
-  $('#cancelBtn').click(function () {
-  
-  });
-
-  $('#supportRvtCbx').click(function(){
-    bSupportRvt = this.checked;
-  })
-
-  $('#supportRfaCbx').click(function(){
-    bSupportRfa = this.checked;
-  })
-
-  $('#supportRteCbx').click(function(){
-    bSupportRte = this.checked;
-  })
-
-  $('#ignoreRbx').click(function(){
-    bIgnore = true;
-  })
-
-  $('#overrideRbx').click(function(){
-    bIgnore = false;
-  })
-
-  $('#upgrade2018Rbx').click(function(){
-    bUpgrade2019 = false;
-  })  
-  
-  $('#upgrade2019Rbx').click(function(){
-    bUpgrade2019 = true;
-  })  
 });
 
 var bSupportRvt = true;
@@ -146,15 +120,13 @@ var bUpgrade2019= true;
 
 const ItemType = {
   FILE : 1,
-  FOLDER: 2,
-  ISSUE: 3
+  FOLDER: 2
 };
 
-const LabelIdEndfix = '-item';
-// const QueryIdEndfix = '-query';
+const LabelIdEndfix  = '-item';
 const CancelIdEndfix = '-cancel';
 
-var workitemList = new Array();
+var workitemList    = new Array();
 var destinatedNode  = null;
 var sourceNode      = null;
 
@@ -164,26 +136,22 @@ socketio = io();
 socketio.on(SOCKET_TOPIC_WORKITEM, async (data)=>{
   console.log(data);
   updateListItem(data.WorkitemId, data.Status);
-  if(data.Status.toLowerCase() == 'completed' || data.Status.toLowerCase() == 'failed' || data.Status.toLowerCase() == 'cancelled'){
+  if(data.Status.toLowerCase() === 'completed' || data.Status.toLowerCase() === 'failed' || data.Status.toLowerCase() === 'cancelled'){
     workitemList.pop(data.WorkitemId);
   }
-  // start to create the project issue when it's done
-  if(workitemList.length == 0){
-    if(destinatedNode != null ){
-      document.getElementById('upgradeTitle').innerHTML ="<h4>Creating upgrade log issue in BIM 360 ...</h4>";
-      let issueRes = await startIssueProcess(destinatedNode)
-      //  Set the status when it's done
-      let upgradeBtnElm = document.getElementById('upgradeBtn');
-      upgradeBtnElm.disabled = false;
-    }
+  // Mark as finished when the workitemList is empty
+  if(workitemList.length === 0){
+    let upgradeBtnElm = document.getElementById('upgradeBtn');
+    upgradeBtnElm.disabled = false;
     document.getElementById('upgradeTitle').innerHTML ="<h4>Upgrade Fully Completed!</h4>";
+
     // refresh the selected node
-    if(sourceNode != null){
+    if(sourceNode !== null){
       let instance = $('#sourceHubs').jstree(true);
       instance.refresh_node(sourceNode);
       sourceNode = null;
     }
-    if(destinatedNode != null ){
+    if(destinatedNode !== null ){
       let instance = $('#destinationHubs').jstree(true);
       instance.refresh_node(destinatedNode);
       destinatedNode = null;
@@ -191,107 +159,11 @@ socketio.on(SOCKET_TOPIC_WORKITEM, async (data)=>{
  }
 })
 
-
-async function startIssueProcess(destinationNode) {
-  if (destinationNode == null) {
-    console.log('destinated folder is not selected');
-    return null;
-  }
-
-  const folderIdParams = destinationNode.id.split('/');
-  const folderId = folderIdParams[folderIdParams.length - 1];
-
-  let parents = destinationNode.parents;
-  if (parents == null || parents.length < 3) {
-    console.log('destinated select must be a folder');
-    alert('please select a folder');
-    return null;
-  }
-
-  const projectIdParams = parents[parents.length - 3].split('/');
-  const hubId = projectIdParams[projectIdParams.length - 3];
-  const projectId = projectIdParams[projectIdParams.length - 1];
-  let input = {
-    "hubId": hubId,
-    "projectId": projectId,
-    "folderId": folderId
-  }
-  try {
-    let issueRes = await createProjectIssue(input);
-    addGroupListItem("Project Issue: " + issueRes.issue_id, "created", ItemType.ISSUE, 'list-group-item-danger');
-    return issueRes;
-  } catch (err) {
-    addGroupListItem("Project Issue ", 'failed', ItemType.ISSUE, 'list-group-item-danger');
-  }
-  return null;
-
-}
-
-
-function createProjectIssue(input){
-  let def = $.Deferred();
-
-  if (input == null) {
-    def.reject('parameter is null');
-    return def.reject('parameter is null');
-  }
-
-  // create the body of the group list item
-  let logBody = createLogJson();
-
-  jQuery.post({
-    url: '/api/forge/bim360/issue/doc',
-    contentType: 'application/json',
-    data: JSON.stringify({
-      'hubId': input.hubId,
-      'projectId': input.projectId,
-      'folderId' : input.folderId,
-      'logBody': logBody
-    }),
-    success: function (res) {
-      def.resolve(JSON.parse(res));
-    },
-    error: function (err) {
-      def.reject(err);
-    }
-  });
-  return def.promise();
-}
-
-
-function createLogJson(){
-
-  let logGroup = document.getElementById('logStatus');
-  let logItems = logGroup.children;
-  let text = '';
-  let allFileCount = 0;
-  let goodFileCount = 0;
-  for( let index=0; index<logItems.length; index++ ){
-    text = text + logItems[index].textContent +' \n ';
-
-    const params = logItems[index].textContent.split(':');
-    if( params[params.length-1].toLowerCase() == 'completed') {
-      goodFileCount++;
-    }
-    if( params[0].toLowerCase() != 'folder'){
-      allFileCount++;
-    }
-  }
-  const logContent = {
-    FileCount : allFileCount,
-    SuccessFileCount : goodFileCount,
-    Body : text
-
-  }
-  return logContent;
-}
-
-
 async function upgradeFolder(sourceNode, destinationNode) {
-  if (sourceNode == null || sourceNode.type != 'folders')
+  if (sourceNode === null || sourceNode.type !== 'folders')
     return false;
 
-  if (destinationNode == null || destinationNode.type != 'folders')
+  if (destinationNode === null || destinationNode.type !== 'folders')
     return false;
 
   let instance = $("#sourceHubs").jstree(true);
@@ -302,8 +174,7 @@ async function upgradeFolder(sourceNode, destinationNode) {
     let nodeDom = childrenDom[i];
     let node = instance.get_json(nodeDom);
 
-    if (node.type == 'folders') {
-      let content = null;
+    if (node.type === 'folders') {
       let destinatedSubFolder = null;
       try {
         destinatedSubFolder = await createNamedFolder(destinationNode, node.text)
@@ -317,17 +188,16 @@ async function upgradeFolder(sourceNode, destinationNode) {
         addGroupListItem(node.text,'failed', ItemType.FOLDER, 'list-group-item-danger' )
       }
     }
-    if (node.type == 'items') {
-      // ignore any not supported file
-      const fileParts = node.text.split('.');
+    if (node.type === 'items') {
+      const fileParts     = node.text.split('.');
       const fileExtension = fileParts[fileParts.length-1].toLowerCase();
-      if( (bSupportRvt && fileExtension=='rvt') || (bSupportRfa && fileExtension == 'rfa') || (bSupportRte && fileExtension == 'rte'  )){
-
-        let content = null;
+      if( (bSupportRvt && fileExtension === 'rvt') 
+        || (bSupportRfa && fileExtension === 'rfa') 
+        || (bSupportRte && fileExtension === 'rte')){
         try {
           let upgradeInfo = await upgradeFileToFolder(node.id, destinationNode.id);
           workitemList.push(upgradeInfo.workItemId);
-          addGroupListItem(node.text, upgradeInfo.workItemStatus, ItemType.FILE, 'list-group-item-info', upgradeInfo.workItemId  );
+          addGroupListItem(node.text, upgradeInfo.workItemStatus, ItemType.FILE, 'list-group-item-info', upgradeInfo.workItemId );
         } catch (err) {
           addGroupListItem(node.text, 'failed', ItemType.FILE, 'list-group-item-danger' );
         }
@@ -340,17 +210,19 @@ async function upgradeFolder(sourceNode, destinationNode) {
 function upgradeFileToFolder(sourceFile, destinateFolder){  
   let def = $.Deferred();
 
-  if (sourceFile == null || destinateFolder == null ){
+  if (sourceFile === null || destinateFolder === null ){
     def.reject('input parameters are null');
     return def.promise();
   }
+  encodeURIComponent()
   
   jQuery.post({
-    url: '/api/forge/da4revit/upgradeToFolder',
+    url: '/api/forge/da4revit/v1/upgrader/files/'+encodeURIComponent(sourceFile)+'/folders/'+encodeURIComponent(destinateFolder),
     contentType: 'application/json',
+    dataType: 'json',
     data: JSON.stringify({ 'sourceFile': sourceFile, 'destinateFolder': destinateFolder }),
     success: function (res) {
-      def.resolve(JSON.parse(res));
+      def.resolve(res);
     },
     error: function (err) {
       def.reject(err);
@@ -363,23 +235,24 @@ function upgradeFileToFolder(sourceFile, destinateFolder){
 function upgradeFile(node) {
   let def = $.Deferred();
 
-  if (node == null) {
+  if (node === null) {
     def.reject('selected item is null');
     return def.promise();
   }
 
-  const id = node.id;
-  const text = node.text;
+  const fileItemId   = node.id;
+  const fileItemName = node.text;
 
   jQuery.post({
-    url: '/api/forge/da4revit/upgrade',
+    url: '/api/forge/da4revit/v1/upgrader/files',
     contentType: 'application/json',
+    dataType:'json',
     data: JSON.stringify({
-      'id': id,
-      'name': text
+      'fileItemId': fileItemId,
+      'fileItemName': fileItemName
     }),
     success: function (res) {
-      def.resolve(JSON.parse(res));
+      def.resolve(res);
     },
     error: function (err) {
       def.reject(err);
@@ -394,11 +267,10 @@ function prepareUserHubsTree( userHubs) {
       'themes': { "icons": true },
       'multiple': false,
       'data': {
-        "url": '/api/forge/datamanagement',
+        "url": '/api/forge/datamanagement/v1',
         "dataType": "json",
         'cache': false,
         'data': function (node) {
-          // $(userHubs).jstree(true).toggle_node(node);
           return { "id": node.id };
         }
       }
@@ -439,15 +311,14 @@ function prepareUserHubsTree( userHubs) {
       }
     },
     "plugins": ["types", "state", "sort", "contextmenu"],
-    contextmenu: { items: (userHubs=='#sourceHubs'? autodeskCustomMenu: autodeskCustomMenuRight)},
+    contextmenu: { items: (userHubs === '#sourceHubs'? autodeskCustomMenuSource: autodeskCustomMenuDestination)},
     "state": { "key": "autodeskHubs" }// key restore tree state
   }).bind("activate_node.jstree", function (evt, data) {
   });
 }
 
 
-
-function autodeskCustomMenu(autodeskNode) {
+function autodeskCustomMenuSource(autodeskNode) {
   var items;
 
   switch (autodeskNode.type) {
@@ -457,9 +328,8 @@ function autodeskCustomMenu(autodeskNode) {
           label: "Upgrade to Revit 2019",
           action: async function () {
             try{
-              // remove items if any.
               let logList = document.getElementById('logStatus');
-              let index = logList.childElementCount;
+              let index   = logList.childElementCount;
               while(index > 0){
                 logList.removeChild(logList.firstElementChild);
                 index--;
@@ -485,7 +355,7 @@ function autodeskCustomMenu(autodeskNode) {
 }
 
 
-function autodeskCustomMenuRight(autodeskNode) {
+function autodeskCustomMenuDestination(autodeskNode) {
   var items;
 
   switch (autodeskNode.type) {
@@ -501,7 +371,6 @@ function autodeskCustomMenuRight(autodeskNode) {
         deleteFolder: {
           label: "Delete folder",
           action: async function () {
-            // var treeNode = $('#sourceHubs').jstree(true).get_selected(true)[0];
             try{
               await deleteFolder(autodeskNode);
               // refresh the parent node
@@ -527,20 +396,20 @@ function autodeskCustomMenuRight(autodeskNode) {
 function deleteFolder(node){
   let def = $.Deferred();
 
-  if (node == null) {
-    console.log('selected node is not correct.');
+  if (node === null) {
     def.reject('selected node is not correct.');
+    return def.promise();
   }
 
-  jQuery.post({
-    url: '/api/forge/datamanagement/folder/delete',
-    contentType: 'application/json',
-    data: JSON.stringify({ 'id': node.id}),
+  $.ajax({
+    url: '/api/forge/datamanagement/v1/folder/' + encodeURIComponent(node.id),
+    type: "delete",
+    dataType: "json",
     success: function (res) {
-      console.log('folder is deleted.')
-      def.resolve('folder is deleted');
+      def.resolve(res);
     },
-    error: function(err){
+    error: function (err) {
+      console.log(err)
       def.reject(err);
     }
   });
@@ -550,13 +419,13 @@ function deleteFolder(node){
 
 
 async function createFolder(node) {
-  if (node == null) {
+  if (node === null) {
     console.log('selected node is not correct.');
     return;
   }
 
   const folderName = prompt("Please specify the folder name:");
-  if (folderName == null || folderName == '')
+  if (folderName === null || folderName === '')
     return;
 
   try {
@@ -575,21 +444,21 @@ function createNamedFolder(node, folderName) {
 
   let def = $.Deferred();
 
-  if (node == null || folderName == null || folderName == '') {
-    console.log('parameters are not correct.');
+  if (node === null || folderName === null || folderName === '') {
     def.reject("parameters are not correct.");
+    return def.promise();
   }
 
   jQuery.post({
-    url: '/api/forge/datamanagement/folder',
+    url: '/api/forge/datamanagement/v1/folder',
     contentType: 'application/json',
+    dataType: 'json',
     data: JSON.stringify({
       'id': node.id,
       'name': folderName
     }),
     success: function (res) {
-      console.log(res)
-      def.resolve(JSON.parse(res));
+      def.resolve(res);
     },
     error: function (err) {
       console.log(err)
@@ -598,51 +467,44 @@ function createNamedFolder(node, folderName) {
   });
   return def.promise();
 }
+
 
 function cancelWorkitem( workitemId ){
-
   let def = $.Deferred();
 
-  if(workitemId == null || workitemId == ''){
-    console.log('parameters are not correct.');
+  if(workitemId === null || workitemId === ''){
     def.reject("parameters are not correct.");  
+    return def.promise();
   }
 
-  jQuery.post({
-    url: '/api/forge/da4revit/workitem/cancel',
-    contentType: 'application/json',
-    data: JSON.stringify({
-      'workitemId': workitemId
-    }),
+  $.ajax({
+    url: '/api/forge/da4revit/v1/upgrader/files/' + workitemId,
+    type: "delete",
+    dataType: "json",
     success: function (res) {
-      console.log(res)
-      def.resolve(JSON.parse(res));
+      def.resolve(res);
     },
     error: function (err) {
-      console.log(err)
       def.reject(err);
     }
   });
   return def.promise();
 }
+
 
 function getWorkitemStatus( workitemId ){
   let def = $.Deferred();
 
-  if(workitemId == null || workitemId == ''){
-    console.log('parameters are not correct.');
+  if(workitemId === null || workitemId === ''){
     def.reject("parameters are not correct.");  
+    return def.promise();
   }
 
-  jQuery.post({
-    url: '/api/forge/da4revit/workitem/query',
-    contentType: 'application/json',
-    data: JSON.stringify({
-      'workitemId': workitemId
-    }),
+  jQuery.get({
+    url: '/api/forge/da4revit/v1/upgrader/files/' + workitemId,
+    dataType: 'json',
     success: function (res) {
-      console.log(res)
-      def.resolve(JSON.parse(res));
+      def.resolve(res);
     },
     error: function (err) {
       console.log(err)
@@ -654,24 +516,23 @@ function getWorkitemStatus( workitemId ){
 
 function updateListItem( itemId, statusStr){
   let item = document.getElementById(itemId+ LabelIdEndfix);
-  if(item != null){
+  if(item !== null){
     item.textContent = ', workitem is: '+ itemId+ ', status is:' + statusStr;
     const statusStrLowercase = statusStr.toLowerCase();
-    if(statusStrLowercase == 'success' 
-    || statusStrLowercase == 'cancelled'
-    || statusStrLowercase == 'completed'
-    | statusStrLowercase == 'failed'){
+    if(statusStrLowercase === 'success' 
+    || statusStrLowercase === 'cancelled'
+    || statusStrLowercase === 'completed'
+    || statusStrLowercase === 'failed'){
       let cancelBtn = document.getElementById(itemId+CancelIdEndfix);
-      if( cancelBtn != null ){
+      if( cancelBtn !== null ){
         cancelBtn.remove();
       }
-      item.parentElement.setAttribute('class', (statusStr.toLowerCase() == 'completed')?'list-group-item-success':'list-group-item-warning');
+      item.parentElement.setAttribute('class', (statusStr.toLowerCase() === 'completed')?'list-group-item-success':'list-group-item-warning');
     }
   }
 }
 
 function addGroupListItem(itemText, statusStr, itemType, itemStyle, itemId) {
-
   let li = document.createElement('li')
   li.setAttribute('class', 'list-group-item ' + itemStyle);
 
@@ -701,11 +562,6 @@ function addGroupListItem(itemText, statusStr, itemType, itemStyle, itemId) {
       break;
     case ItemType.FOLDER:
       li.textContent = 'Folder:' + itemText;
-      label.textContent = ', status is:' + statusStr;
-      li.appendChild(label)
-      break;
-    case ItemType.ISSUE:
-      li.textContent = 'Issue:' + itemText;
       label.textContent = ', status is:' + statusStr;
       li.appendChild(label)
       break;

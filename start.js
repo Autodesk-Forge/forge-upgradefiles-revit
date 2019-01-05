@@ -39,7 +39,6 @@ app.use('/api/forge', require('./routes/oauth'));
 app.use('/api/forge', require('./routes/datamanagement'));
 app.use('/api/forge', require('./routes/user'));
 app.use('/api/forge', require('./routes/da4revit'));
-app.use('/api/forge', require('./routes/bim360'));
 app.use((err, req, res, next) => {
     console.error(err);
     res.status(err.statusCode).json(err);

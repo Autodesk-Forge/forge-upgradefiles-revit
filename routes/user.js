@@ -19,7 +19,7 @@
 const express = require('express');
 const { UserProfileApi } = require('forge-apis');
 
-const { OAuth } = require('./common/oauth');
+const { OAuth } = require('./common/oauthImp');
 
 let router = express.Router();
 

@@ -64,27 +64,17 @@
               <a href="https://forge.autodesk.com/blog/bim-360-docs-provisioning-forge-apps">Learn more</a>.
             </div>
           </div>
-
-
-
         </div>
       </div>
-
       <div class="col-sm-6 fill">
-
         <div class="row">
             <div style="padding-top: 10px; text-align: center;">
                 <h2>Revit File Upgrader Online</h2>
-
             </div>
             <br />
-
           </div>
-  
         <div class="row ">
           <div style="padding-top: 10px; text-align: center;">
-
-            <!-- <div style="padding: 100px 100px 10px;"> -->
             <form class="bs-example bs-example-form" role="form">
               <div class="row">
                 <div class="col-lg-6">
@@ -93,14 +83,14 @@
                   </div>
                   <div class="input-group">
                     <span class="input-group-addon">
-                      <input type="radio" name='samefile' id='overrideRbx'>
+                      <input type="radio" name='fileExisted' value='override'>
                     </span>
                     <label class="form-control">Override</label>
                     <!-- <input type="text" class="form-control"> -->
                   </div><!-- /input-group -->
                   <div class="input-group">
                     <span class="input-group-addon">
-                      <input type="radio" name='samefile' id='ignoreRbx' checked>
+                      <input type="radio" name='fileExisted' value='skip' checked>
                     </span>
                     <label class="form-control">Skip</label>
                   </div><!-- /input-group -->
@@ -111,13 +101,13 @@
                   </div>
                   <div class="input-group">
                       <span class="input-group-addon">
-                        <input type="radio" name='radio' id='upgrade2019Rbx' value='2019' checked>
+                        <input type="radio" name='upgradeToVersion' value='2019' checked>
                       </span>
                       <label class="form-control">Revit 2019</label>
                     </div><!-- /input-group -->
                     <div class="input-group">
                     <span class="input-group-addon">
-                      <input type="radio" name='radio' id='upgrade2018Rbx' value='2018' >
+                      <input type="radio" name='upgradeToVersion' value='2018' >
                     </span>
                     <label class="form-control">Revit 2018</label>
                   </div><!-- /input-group -->
@@ -157,17 +147,9 @@
             <!-- </div> -->
             <br />
             <br />
-
-
-
             <div class="btn-group btn-group-lg">
-
-
               <button class="btn btn-lg btn-default" id="upgradeBtn">
                 <span class="glyphicon glyphicon-play"></span>Upgrade
-              </button>
-              <button class="btn btn-lg btn-default" id="cancelBtn">
-                <span class="glyphicon glyphicon-stop"></span>Cancel
               </button>
             </div>
             <br />
@@ -183,20 +165,12 @@
         </div>
         <div class="row">
           <div>
-            <div style="padding-top: 10px; overflow:auto; text-align: left; height: 550px; background-color: bisque">
+            <div style="padding-top: 10px; overflow:auto; text-align: left; height: 500px; background-color: bisque">
               <div class="list-group" id="logStatus">
               </div>
             </div>
           </div>
         </div>
-        <div class="row">
-          <div>
-            <div id="forgeViewer"></div>
-            <div style="padding-top: 10px; text-align: center;">
-            </div>
-          </div>
-        </div>
-
       </div>
       <div class="col-sm-3 fill">
         <br/>

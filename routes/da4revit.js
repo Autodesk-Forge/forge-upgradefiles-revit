@@ -159,9 +159,9 @@ router.post('/da4revit/v1/upgrader/files', async (req, res, next) => {
 ///
 ///
 ///////////////////////////////////////////////////////////////////////
-router.post('/da4revit/v1/upgrader/files/:sourcefileurl/folders/:destinatefolderurl', async (req, res, next) => {
-    const sourceFileUrl = (req.params.sourcefileurl); 
-    const destinateFolderUrl = (req.params.destinatefolderurl);
+router.post('/da4revit/v1/upgrader/files/:source_file_url/folders/:destinate_folder_url', async (req, res, next) => {
+    const sourceFileUrl = (req.params.source_file_url); 
+    const destinateFolderUrl = (req.params.destinate_folder_url);
     if (sourceFileUrl === '' || destinateFolderUrl === '') {
         res.status(400).end('make sure sourceFile and destinateFolder have correct value');
         return;
@@ -265,14 +265,14 @@ router.post('/da4revit/v1/upgrader/files/:sourcefileurl/folders/:destinatefolder
 /// Cancel the file upgrade process if possible.
 /// NOTE: This may not successful if the upgrade process is already started
 ///////////////////////////////////////////////////////////////////////
-router.delete('/da4revit/v1/upgrader/files/:fileworkitemid', async(req, res, next) =>{
+router.delete('/da4revit/v1/upgrader/files/:file_workitem_id', async(req, res, next) =>{
 
-    const workitemId = req.params.fileworkitemid;
+    const workitemId = req.params.file_workitem_id;
     try {
         const oauth = new OAuth(req.session);
         const oauth_client = oauth.get2LeggedClient();;
         const oauth_token = await oauth_client.authenticate();
-        let workitemRes = await cancelWrokitem(workitemId, oauth_token.access_token);
+        await cancelWrokitem(workitemId, oauth_token.access_token);
         let workitemStatus = {
             'WorkitemId': workitemId,
             'Status': "Cancelled"
@@ -289,8 +289,8 @@ router.delete('/da4revit/v1/upgrader/files/:fileworkitemid', async(req, res, nex
         let index = workitemList.indexOf(workitem);
         workitemList.splice(index, 1);
 
-        global.socketio.emit(SOCKET_TOPIC_WORKITEM, workitemStatus);
-        res.status(200).end(JSON.stringify(workitemRes.body));
+        global.MyApp.SocketIo.emit(SOCKET_TOPIC_WORKITEM, workitemStatus);
+        res.status(204).end();
     } catch (err) {
         res.status(500).end("error");
     }
@@ -299,8 +299,8 @@ router.delete('/da4revit/v1/upgrader/files/:fileworkitemid', async(req, res, nex
 ///////////////////////////////////////////////////////////////////////
 /// Query the status of the file
 ///////////////////////////////////////////////////////////////////////
-router.get('/da4revit/v1/upgrader/files/:fileworkitemid', async(req, res, next) => {
-    const workitemId = req.params.fileworkitemid;
+router.get('/da4revit/v1/upgrader/files/:file_workitem_id', async(req, res, next) => {
+    const workitemId = req.params.file_workitem_id;
     try {
         const oauth = new OAuth(req.session);
         const oauth_client = oauth.get2LeggedClient();;
@@ -336,7 +336,7 @@ router.post('/da4revit/callback', async (req, res, next) => {
         }
         let index = workitemList.indexOf(workitem);
         workitemStatus.Status = 'Success';
-        global.socketio.emit(SOCKET_TOPIC_WORKITEM, workitemStatus);
+        global.MyApp.SocketIo.emit(SOCKET_TOPIC_WORKITEM, workitemStatus);
         console.log("Post handle the workitem:  " + workitem.workitemId);
 
         const type = workitem.createVersionData.data.type;
@@ -356,12 +356,12 @@ router.post('/da4revit/callback', async (req, res, next) => {
                 console.log('Successfully created a new version of the file');
                 workitemStatus.Status = 'Completed';
             }
-            global.socketio.emit(SOCKET_TOPIC_WORKITEM, workitemStatus);
+            global.MyApp.SocketIo.emit(SOCKET_TOPIC_WORKITEM, workitemStatus);
 
         } catch (err) {
             console.log(err);
             workitemStatus.Status = 'Failed';
-            global.socketio.emit(SOCKET_TOPIC_WORKITEM, workitemStatus);
+            global.MyApp.SocketIo.emit(SOCKET_TOPIC_WORKITEM, workitemStatus);
         }
         finally{
             // Remove the workitem after it's done
@@ -371,7 +371,7 @@ router.post('/da4revit/callback', async (req, res, next) => {
     }else{
         // Report if not successful.
         workitemStatus.Status = 'Failed';
-        global.socketio.emit(SOCKET_TOPIC_WORKITEM, workitemStatus);
+        global.MyApp.SocketIo.emit(SOCKET_TOPIC_WORKITEM, workitemStatus);
         console.log(req.body);
     }
     return;

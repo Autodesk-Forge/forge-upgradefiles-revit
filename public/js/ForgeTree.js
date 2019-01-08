@@ -478,7 +478,7 @@ function cancelWorkitem( workitemId ){
   }
 
   $.ajax({
-    url: '/api/forge/da4revit/v1/upgrader/files/' + workitemId,
+    url: '/api/forge/da4revit/v1/upgrader/files/' + encodeURIComponent(workitemId),
     type: "delete",
     dataType: "json",
     success: function (res) {
@@ -501,7 +501,7 @@ function getWorkitemStatus( workitemId ){
   }
 
   jQuery.get({
-    url: '/api/forge/da4revit/v1/upgrader/files/' + workitemId,
+    url: '/api/forge/da4revit/v1/upgrader/files/' + encodeURIComponent(workitemId),
     dataType: 'json',
     success: function (res) {
       def.resolve(res);
@@ -550,8 +550,7 @@ function addGroupListItem(itemText, statusStr, itemType, itemStyle, itemId) {
       spanCancel.onclick = async (e) => {
         const idParams = e.currentTarget.id.split('-')
         try {
-          let res = await cancelWorkitem(idParams[0]);
-          // updateListItem(idParams[0], 'cancelled');
+          await cancelWorkitem(idParams[0]);
         } catch (err) {
           console.log('failed to cencel the workitem' + idParams[0]);
         }
@@ -566,25 +565,6 @@ function addGroupListItem(itemText, statusStr, itemType, itemStyle, itemId) {
       li.appendChild(label)
       break;
   }
-
-  // if (isFileItem) {
-  //   // add Cancel button
-  //   let spanCancel = document.createElement('span')
-  //   spanCancel.setAttribute('class', 'btn btn-xs btn-default')
-  //   spanCancel.setAttribute('id', itemId + CancelIdEndfix);
-  //   spanCancel.onclick = async (e) => {
-  //     const idParams = e.currentTarget.id.split('-')
-  //     try {
-  //       let res = await cancelWorkitem(idParams[0]);
-  //       // updateListItem(idParams[0], 'cancelled');
-  //     } catch (err) {
-  //       console.log('failed to cencel the workitem' + idParams[0]);
-  //     }
-  //   };
-
-  //   spanCancel.textContent = 'Cancel';
-  //   li.appendChild(spanCancel)
-  // }
   $('#logStatus')[0].appendChild(li);
 }
 

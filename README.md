@@ -68,22 +68,27 @@ Open the browser: [http://localhost:3000](http://localhost:3000).
 
 ## Main Backend API used
 ### File upgrade API based on Design Automation API
-- **POST      /api/forge/da4revit/v1/upgrader/files/:sourcefileurl/folders/:destinatefolderurl**
-
+- **POST      /api/forge/da4revit/v1/upgrader/files/:source_file_url/folders/:destinate_folder_url**
 - **POST      /api/forge/da4revit/v1/upgrader/files**
-
-- **GET       /api/forge/da4revit/v1/upgrader/files/:fileworkitemid**
-
-- **DELETE    /api/forge/da4revit/v1/upgrader/files/:fileworkitemid**
-
+- **GET       /api/forge/da4revit/v1/upgrader/files/:file_workitem_id**
+- **DELETE    /api/forge/da4revit/v1/upgrader/files/:file_workitem_id**
 - **POST      /api/forge/da4revit/callback**
-This endpoint is a webhook that would be invoked by the Design Automation API, 
+- This endpoint is a webhook that would be invoked by the Design Automation API, 
 you need to use ngrok to configure your Local Server for testing, please [WebHooks](https://forge.autodesk.com/en/docs/webhooks/v1/tutorials/configuring-your-server/) for details. 
 
 ### File/Folder operation API based on Data Management API
 - **POST      /api/forge/datamanagement/v1/folder**
-- **DELETE    /api/forge//datamanagement/v1/folder/:folderurl**
+- **DELETE    /api/forge//datamanagement/v1/folder/:folder_url**
 - **GET       /api/forge/datamanagement/v1**
+
+### User information API
+- **GET       /api/forge/user/v1/profile**
+
+### OAuth information API
+- **GET       /api/forge/oauth/v1/url**
+- **GET       /api/forge/oauth/v1/signout**
+- **GET       /api/forge/oauth/v1/token**
+- **GET      /api/forge/callback/oauth**
 
 ## Packages used
 

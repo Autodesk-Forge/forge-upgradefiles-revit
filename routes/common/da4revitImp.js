@@ -422,7 +422,7 @@ function createPostWorkitemBody(inputUrl, outputUrl, fileExtension, access_token
                     },
                     onComplete: {
                         verb: "post",
-                        url: designAutomation.callback_Url
+                        url: designAutomation.callback_DA_Url
                     }
                 }
             };
@@ -446,7 +446,7 @@ function createPostWorkitemBody(inputUrl, outputUrl, fileExtension, access_token
                     },
                     onComplete: {
                         verb: "post",
-                        url: designAutomation.callback_Url
+                        url: designAutomation.callback_DA_Url
                     }
                 }
             };
@@ -470,12 +470,11 @@ function createPostWorkitemBody(inputUrl, outputUrl, fileExtension, access_token
                     },
                     onComplete: {
                         verb: "post",
-                        url: designAutomation.callback_Url
+                        url: designAutomation.callback_DA_Url
                     }
                 }
             };
             break;
-
     }
     return body;
 }

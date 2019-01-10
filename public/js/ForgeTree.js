@@ -19,7 +19,7 @@
 $(document).ready(function () {
   // first, check if current visitor is signed in
   jQuery.ajax({
-    url: '/api/forge/oauth/token',
+    url: '/api/forge/oauth/v1/token',
     success: function (res) {
       // yes, it is signed in...
       $('#autodeskSignOutButton').show();
@@ -33,7 +33,7 @@ $(document).ready(function () {
       // prepare sign out
       $('#autodeskSignOutButton').click(function () {
         $('#hiddenFrame').on('load', function (event) {
-          location.href = '/api/forge/oauth/signout';
+          location.href = '/api/forge/oauth/v1/signout';
         });
         $('#hiddenFrame').attr('src', 'https://accounts.autodesk.com/Authentication/LogOut');
         // learn more about this signout iframe at
@@ -61,7 +61,7 @@ $(document).ready(function () {
 
   $('#autodeskSigninButton').click(function () {
     jQuery.ajax({
-      url: '/api/forge/oauth/url',
+      url: '/api/forge/oauth/v1/url',
       success: function (url) {
         location.href = url;
       }
@@ -570,7 +570,7 @@ function addGroupListItem(itemText, statusStr, itemType, itemStyle, itemId) {
 
 function showUser() {
   jQuery.ajax({
-    url: '/api/forge/user/profile',
+    url: '/api/forge/user/v1/profile',
     success: function (profile) {
       var img = '<img src="' + profile.picture + '" height="20px">';
       $('#userInfo').html(img + profile.name);

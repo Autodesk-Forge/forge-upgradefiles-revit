@@ -35,7 +35,7 @@ module.exports = {
         public: ['viewables:read']
     },
     designAutomation:{
-        callback_Url: process.env.FORGE_WORK_ITEM_CALLBACK_URL,
+        callback_DA_Url: process.env.FORGE_WORK_ITEM_CALLBACK_URL,
         revit_IO_Endpoint: 'https://developer.api.autodesk.com/da/us-east/v3/',
         revit_IO_Nick_Name: 'fileupgradersample',
         revit_IO_App_Name: 'FileUpgraderApp+prod',

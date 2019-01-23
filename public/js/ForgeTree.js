@@ -106,9 +106,10 @@ $(document).ready(function () {
     let upgradeBtnElm = document.getElementById('upgradeBtn');
     upgradeBtnElm.disabled = true;
         
-    document.getElementById('upgradeTitle').innerHTML ="<h4>Start upgrading Revit files...</h4>";
+    document.getElementById('upgradeTitle').innerHTML ="<h4>Start upgrading Revit files(Limitation: 5 Files Maximun)...</h4>";
+    fileNumber = 0;
     await upgradeFolder(sourceNode, destinatedNode);
-    document.getElementById('upgradeTitle').innerHTML ="<h4>Creating versions in BIM360...</h4>";
+    document.getElementById('upgradeTitle').innerHTML ="<h4>Creating versions in BIM360(Limitation: 5 Files Maximun)...</h4>";
   });
 });
 
@@ -117,6 +118,9 @@ var bSupportRfa = true;
 var bSupportRte = true;
 var bIgnore     = true;
 var bUpgrade2019= true;
+
+const FileLimitation = 5;
+var fileNumber = 0;
 
 const ItemType = {
   FILE : 1,
@@ -171,6 +175,10 @@ async function upgradeFolder(sourceNode, destinationNode) {
   let childrenDom = instance.get_children_dom(sourceNode);
 
   for (let i = 0; i < childrenDom.length; i++) {
+    if( fileNumber >= FileLimitation ){
+      return;
+    }
+
     let nodeDom = childrenDom[i];
     let node = instance.get_json(nodeDom);
 
@@ -201,6 +209,7 @@ async function upgradeFolder(sourceNode, destinationNode) {
         } catch (err) {
           addGroupListItem(node.text, 'failed', ItemType.FILE, 'list-group-item-danger' );
         }
+        fileNumber = fileNumber + 1;
       } 
     }
   }

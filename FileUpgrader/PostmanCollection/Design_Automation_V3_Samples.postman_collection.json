@@ -1,0 +1,2340 @@
+{
+	"info": {
+		"_postman_id": "9581ed38-9ff7-483c-bbd7-92059bcad597",
+		"name": "DA4R_File_Upgrader_Samples",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "EngineApi",
+			"item": [
+				{
+					"name": "List Engines",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4df5bb87-36c1-4031-bc37-4be229448457",
+								"type": "text/javascript",
+								"exec": [
+									"var body = JSON.parse(responseBody);",
+									"pm.environment.set(\"engine\", body[\"data\"][14]);",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{dasApiToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{dasApiRoot}}/engines",
+							"host": [
+								"{{dasApiRoot}}"
+							],
+							"path": [
+								"engines"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Engine",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e711f374-3220-4beb-a58f-0e50098bade5",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{dasApiToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{dasApiRoot}}/engines/{{engine}}",
+							"host": [
+								"{{dasApiRoot}}"
+							],
+							"path": [
+								"engines",
+								"{{engine}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Nickname",
+			"item": [
+				{
+					"name": "Delete user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5b993251-5b30-4bab-bc41-2f15cc54d56e",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{dasApiToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"nickname\": \"{{dasNickName}}\"\r\n}"
+						},
+						"url": {
+							"raw": "{{dasApiRoot}}/forgeapps/me",
+							"host": [
+								"{{dasApiRoot}}"
+							],
+							"path": [
+								"forgeapps",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5b993251-5b30-4bab-bc41-2f15cc54d56e",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{dasApiToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{dasApiRoot}}/forgeapps/me",
+							"host": [
+								"{{dasApiRoot}}"
+							],
+							"path": [
+								"forgeapps",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create nickname",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5b993251-5b30-4bab-bc41-2f15cc54d56e",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{dasApiToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"nickname\": \"{{dasNickName}}\"\r\n}"
+						},
+						"url": {
+							"raw": "{{dasApiRoot}}/forgeapps/me",
+							"host": [
+								"{{dasApiRoot}}"
+							],
+							"path": [
+								"forgeapps",
+								"me"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "File Upgrader Api",
+			"item": [
+				{
+					"name": "App",
+					"item": [
+						{
+							"name": "GET commands",
+							"item": [
+								{
+									"name": "Get app aliases",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "",
+												"value": "",
+												"disabled": true
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer {{dasApiToken}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{dasApiRoot}}/appbundles/FileUpgraderApp/aliases",
+											"host": [
+												"{{dasApiRoot}}"
+											],
+											"path": [
+												"appbundles",
+												"FileUpgraderApp",
+												"aliases"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get app versions",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "",
+												"value": "",
+												"disabled": true
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer {{dasApiToken}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{dasApiRoot}}/appbundles/FileUpgraderApp/versions",
+											"host": [
+												"{{dasApiRoot}}"
+											],
+											"path": [
+												"appbundles",
+												"FileUpgraderApp",
+												"versions"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get app versions details",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "",
+												"value": "",
+												"disabled": true
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer {{dasApiToken}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{dasApiRoot}}/appbundles/FileUpgraderApp/versions/{{fileUpgraderAppVersion}}",
+											"host": [
+												"{{dasApiRoot}}"
+											],
+											"path": [
+												"appbundles",
+												"FileUpgraderApp",
+												"versions",
+												"{{fileUpgraderAppVersion}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get list of apps",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "",
+												"value": "",
+												"disabled": true
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer {{dasApiToken}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{dasApiRoot}}/appbundles",
+											"host": [
+												"{{dasApiRoot}}"
+											],
+											"path": [
+												"appbundles"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get app details",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "33cd700f-a5a3-49b5-bb39-ae502a9e9bbb",
+												"exec": [
+													"var body = JSON.parse(responseBody);",
+													"pm.environment.set(\"countItAppUrl\", body[\"package\"]);",
+													"",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "",
+												"value": "",
+												"disabled": true
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer {{dasApiToken}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{dasApiRoot}}/appbundles/{{dasNickName}}.FileUpgraderApp+dev",
+											"host": [
+												"{{dasApiRoot}}"
+											],
+											"path": [
+												"appbundles",
+												"{{dasNickName}}.FileUpgraderApp+dev"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get app aliases details",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "",
+												"value": "",
+												"disabled": true
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer {{dasApiToken}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{dasApiRoot}}/appbundles/FileUpgraderApp/aliases/dev",
+											"host": [
+												"{{dasApiRoot}}"
+											],
+											"path": [
+												"appbundles",
+												"FileUpgraderApp",
+												"aliases",
+												"dev"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "DELETE commands",
+							"item": [
+								{
+									"name": "Delete app version",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "f690c135-20b4-4003-8659-c35bec0784cd",
+												"type": "text/javascript",
+												"exec": [
+													""
+												]
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer {{dasApiToken}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{dasApiRoot}}/appbundles/CountItApp/versions/{{fileUpgraderAppVersion}}",
+											"host": [
+												"{{dasApiRoot}}"
+											],
+											"path": [
+												"appbundles",
+												"CountItApp",
+												"versions",
+												"{{fileUpgraderAppVersion}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete app",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "a888e276-36fd-478d-85a0-33821043131c",
+												"type": "text/javascript",
+												"exec": [
+													""
+												]
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer {{dasApiToken}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{dasApiRoot}}/appbundles/FileUpgraderApp",
+											"host": [
+												"{{dasApiRoot}}"
+											],
+											"path": [
+												"appbundles",
+												"FileUpgraderApp"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete app alias",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "b57caa2d-870a-416d-8c42-bc3528ec3503",
+												"type": "text/javascript",
+												"exec": [
+													""
+												]
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer {{dasApiToken}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{dasApiRoot}}/appbundles/FileUpgraderApp/aliases/test",
+											"host": [
+												"{{dasApiRoot}}"
+											],
+											"path": [
+												"appbundles",
+												"FileUpgraderApp",
+												"aliases",
+												"test"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "Modify existing app",
+							"item": [
+								{
+									"name": "Create a new app version",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "c86fdb2d-a4f0-4629-a82b-2ff832fa79ce",
+												"type": "text/javascript",
+												"exec": [
+													"var body = JSON.parse(responseBody);",
+													"pm.environment.set(\"fileUpgraderAppUrl\", body[\"package\"]);",
+													"pm.environment.set(\"fileUpgraderAppVersion\", body[\"version\"]);",
+													""
+												]
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "",
+												"value": "",
+												"disabled": true
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer {{dasApiToken}}"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n\t\"engine\": \"Autodesk.Revit+2019\",\r\n\t\"description\": \"FileUpgraderApp based on Revit 2019\"\r\n}"
+										},
+										"url": {
+											"raw": "{{dasApiRoot}}/appbundles/FileUpgraderApp/versions",
+											"host": [
+												"{{dasApiRoot}}"
+											],
+											"path": [
+												"appbundles",
+												"FileUpgraderApp",
+												"versions"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Modify alias details",
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "",
+												"value": "",
+												"disabled": true
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer {{dasApiToken}}"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"version\": {{fileUpgraderAppVersion}}\r\n}"
+										},
+										"url": {
+											"raw": "{{dasApiRoot}}/appbundles/FileUpgraderApp/aliases/test",
+											"host": [
+												"{{dasApiRoot}}"
+											],
+											"path": [
+												"appbundles",
+												"FileUpgraderApp",
+												"aliases",
+												"test"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Upload new version to Design Automation",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Cache-Control",
+												"value": "no-cache"
+											}
+										],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "key",
+													"value": "apps/revitiosample/FileUpgraderApp/8",
+													"type": "text"
+												},
+												{
+													"key": "content-type",
+													"value": "application/octet-stream",
+													"type": "text"
+												},
+												{
+													"key": "policy",
+													"value": "eyJleHBpcmF0aW9uIjoiMjAxOC0xMC0xOVQwMzoxMjo0NC41NTYwNzE1WiIsImNvbmRpdGlvbnMiOlt7ImtleSI6ImFwcHMvcmV2aXRpb3NhbXBsZS9GaWxlVXBncmFkZXJBcHAvOCJ9LHsiYnVja2V0IjoiZGFzcHJvZC1zdG9yZSJ9LHsic3VjY2Vzc19hY3Rpb25fc3RhdHVzIjoiMjAwIn0sWyJzdGFydHMtd2l0aCIsIiRjb250ZW50LVR5cGUiLCJhcHBsaWNhdGlvbi9vY3RldC1zdHJlYW0iXSx7IngtYW16LXNlcnZlci1zaWRlLWVuY3J5cHRpb24iOiJBRVMyNTYifSxbImNvbnRlbnQtbGVuZ3RoLXJhbmdlIiwiMCIsIjEwNDg1NzYwMCJdLHsieC1hbXotY3JlZGVudGlhbCI6IkFTSUFUR1ZKWktNM09ZSUVCR1VULzIwMTgxMDE5L3VzLWVhc3QtMS9zMy9hd3M0X3JlcXVlc3QvIn0seyJ4LWFtei1hbGdvcml0aG0iOiJBV1M0LUhNQUMtU0hBMjU2In0seyJ4LWFtei1kYXRlIjoiMjAxODEwMTlUMDIxMjQ0WiJ9LHsieC1hbXotc2VjdXJpdHktdG9rZW4iOiJGUW9HWlhJdllYZHpFSHNhREZZbjZiNDhPNDFIamJFQkhTTDlBVlRrMktKelJ2NXl2bUtTT2E2UWowU3ZkdFF6b0VxNi9ZVng2eG9KQ1VIRi9vdkJCSFhvZUZ6VjZOOGtFRkpueXFpelVBaHJkTFJUcm9FNDQ5cHgxOFZYRnI4T0JYQXhxN09PT3AyL3NqWHpmZHRvY3ppL1NtNTJteGdsS0lCR1IzL3NIRExuM0Q3aVdhWE9LOWhOTkFvTWRLTGw5N01DRHRYVnVScjM5YlEwMFRHd0lmRElRamk4N1dPdDFFSStzQVVxRHorNFEzY1FvN2pvdU96SytWWVFuRG5TR2VxaDlSR0lKSWttd01jZ1BXWFBKNjNudjhreFoxcFloYWRybG5naUpqRlM3VVRTRUtwVzZNN1JuN1dxbURDOXdHOFdoSkpuTk5KR0xsSVNkazJiUW9tczhiaDJDQzNKZ1RnWVFheCtzSnZYdHQ1a0JrWGY0cDBvNWVLazNnVT0ifV19",
+													"type": "text"
+												},
+												{
+													"key": "success_action_status",
+													"value": "200",
+													"type": "text"
+												},
+												{
+													"key": "x-amz-signature",
+													"value": "d90abffc15e8a10fd97a494bbc82e7ce123c54c93d4b31bd65b18b6fdc6d5e1e",
+													"type": "text"
+												},
+												{
+													"key": "x-amz-credential",
+													"value": "ASIATGVJZKM3OYIEBGUT/20181019/us-east-1/s3/aws4_request/",
+													"type": "text"
+												},
+												{
+													"key": "x-amz-algorithm",
+													"value": "AWS4-HMAC-SHA256",
+													"type": "text"
+												},
+												{
+													"key": "x-amz-date",
+													"value": "20181019T021244Z",
+													"type": "text"
+												},
+												{
+													"key": "x-amz-server-side-encryption",
+													"value": "AES256",
+													"type": "text"
+												},
+												{
+													"key": "x-amz-security-token",
+													"value": "FQoGZXIvYXdzEHsaDFYn6b48O41HjbEBHSL9AVTk2KJzRv5yvmKSOa6Qj0SvdtQzoEq6/YVx6xoJCUHF/ovBBHXoeFzV6N8kEFJnyqizUAhrdLRTroE449px18VXFr8OBXAxq7OOOp2/sjXzfdtoczi/Sm52mxglKIBGR3/sHDLn3D7iWaXOK9hNNAoMdKLl97MCDtXVuRr39bQ00TGwIfDIQji87WOt1EI+sAUqDz+4Q3cQo7jouOzK+VYQnDnSGeqh9RGIJIkmwMcgPWXPJ63nv8kxZ1pYhadrlngiJjFS7UTSEKpW6M7Rn7WqmDC9wG8WhJJnNNJGLlISdk2bQoms8bh2CC3JgTgYQax+sJvXtt5kBkXf4p0o5eKk3gU=",
+													"type": "text"
+												},
+												{
+													"key": "file",
+													"type": "file",
+													"src": ""
+												}
+											]
+										},
+										"url": {
+											"raw": "https://dasprod-store.s3.amazonaws.com",
+											"protocol": "https",
+											"host": [
+												"dasprod-store",
+												"s3",
+												"amazonaws",
+												"com"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "7d2740d1-cb0e-4a55-ac04-244ca5c7f7d0",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "0f620dfb-e333-45b6-af25-fcfb57101fd5",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								}
+							],
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "Create",
+							"item": [
+								{
+									"name": "Create app",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "e4e018d4-0112-48a6-9ccf-61c5d23b79d5",
+												"exec": [
+													"var body = JSON.parse(responseBody);",
+													"pm.environment.set(\"fileUpgraderAppVersion\", body[\"version\"]);",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer {{dasApiToken}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n\t\"id\": \"FileUpgraderApp\",\r\n\t\"engine\": \"Autodesk.Revit+2019\",\r\n\t\"description\": \"FileUpgrader app based on Revit 2019\"\r\n}"
+										},
+										"url": {
+											"raw": "{{dasApiRoot}}/appbundles",
+											"host": [
+												"{{dasApiRoot}}"
+											],
+											"path": [
+												"appbundles"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create a new app alias",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "",
+												"value": "",
+												"disabled": true
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer {{dasApiToken}}"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"version\": {{fileUpgraderAppVersion}},\r\n  \"id\": \"dev\"\r\n}"
+										},
+										"url": {
+											"raw": "{{dasApiRoot}}/appbundles/FileUpgraderApp/aliases",
+											"host": [
+												"{{dasApiRoot}}"
+											],
+											"path": [
+												"appbundles",
+												"FileUpgraderApp",
+												"aliases"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Upload app to Design Automation",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Cache-Control",
+												"value": "no-cache"
+											}
+										],
+										"body": {
+											"mode": "formdata",
+											"formdata": [
+												{
+													"key": "key",
+													"value": "apps/revitiosamplebyzhong/FileUpgraderApp/1",
+													"type": "text"
+												},
+												{
+													"key": "content-type",
+													"value": "application/octet-stream",
+													"type": "text"
+												},
+												{
+													"key": "policy",
+													"value": "eyJleHBpcmF0aW9uIjoiMjAxOS0wMS0yM1QwNTozMDoxNC42NzU2NTk2WiIsImNvbmRpdGlvbnMiOlt7ImtleSI6ImFwcHMvcmV2aXRpb3NhbXBsZWJ5emhvbmcvRmlsZVVwZ3JhZGVyQXBwLzEifSx7ImJ1Y2tldCI6ImRhc3Byb2Qtc3RvcmUifSx7InN1Y2Nlc3NfYWN0aW9uX3N0YXR1cyI6IjIwMCJ9LFsic3RhcnRzLXdpdGgiLCIkc3VjY2Vzc19hY3Rpb25fcmVkaXJlY3QiLCIiXSxbInN0YXJ0cy13aXRoIiwiJGNvbnRlbnQtVHlwZSIsImFwcGxpY2F0aW9uL29jdGV0LXN0cmVhbSJdLHsieC1hbXotc2VydmVyLXNpZGUtZW5jcnlwdGlvbiI6IkFFUzI1NiJ9LFsiY29udGVudC1sZW5ndGgtcmFuZ2UiLCIwIiwiMTA0ODU3NjAwIl0seyJ4LWFtei1jcmVkZW50aWFsIjoiQVNJQVRHVkpaS00zS0pDWFZLV0gvMjAxOTAxMjMvdXMtZWFzdC0xL3MzL2F3czRfcmVxdWVzdC8ifSx7IngtYW16LWFsZ29yaXRobSI6IkFXUzQtSE1BQy1TSEEyNTYifSx7IngtYW16LWRhdGUiOiIyMDE5MDEyM1QwNDMwMTRaIn0seyJ4LWFtei1zZWN1cml0eS10b2tlbiI6IkZRb0daWEl2WVhkekVIMGFERmhQeHJyU1k0UXN6Y0FYbHlMOUFjdlFtRXpYRXdRdTVMOWFTMFpqS3FqSVZDZ2pCdjVQNVErQTZvcnMxL3RHQnBCZCtrTFMybGs1dlJxcVNFZk9hdEQ2ZGJxVWJJMFFNU0RwR2Yzb2JwTzlFVG11R3lmQkZLRThKWHJjUU91cXlva2xtZ05ER2R2emJaNHJJOWpYQXU1eVhLNUMyTHNTZGkzMmVBWHp2VFNrY0d4ajkxa3NSVjR0MUlBWVlkYXUzQ2g0eTVjTlBEUFkyTlk3WThnSkw5bmtldmlCWEtBSzZvcjlkcld3dWR2UVlaMzV4dzUyTDV2ZUZsM1NoejRjNmRHZ0lHbWxrMTd6VitpaHpQTnRhT3pOMGRDbmtnOU80S25VTWc1Q3Q0N212ZWp3d3BlMlMvc1pQZWxuVWo1UXRFaGFQbW44bnQ3MEUyNmhLaUdCM2Q3YUwrOXZtbHZSeGVvVUNZRW8rN1NmNGdVPSJ9XX0=",
+													"type": "text"
+												},
+												{
+													"key": "success_action_status",
+													"value": "200",
+													"type": "text"
+												},
+												{
+													"key": "success_action_redirect",
+													"value": "null",
+													"type": "text"
+												},
+												{
+													"key": "x-amz-signature",
+													"value": "0c54856795ae32653837c31acf95a2183bb7214bff732ec21bb4b3ab49eb2f76",
+													"type": "text"
+												},
+												{
+													"key": "x-amz-credential",
+													"value": "ASIATGVJZKM3KJCXVKWH/20190123/us-east-1/s3/aws4_request/",
+													"type": "text"
+												},
+												{
+													"key": "x-amz-algorithm",
+													"value": "AWS4-HMAC-SHA256",
+													"type": "text"
+												},
+												{
+													"key": "x-amz-date",
+													"value": "20190123T043014Z",
+													"type": "text"
+												},
+												{
+													"key": "x-amz-server-side-encryption",
+													"value": "AES256",
+													"type": "text"
+												},
+												{
+													"key": "x-amz-security-token",
+													"value": "FQoGZXIvYXdzEH0aDFhPxrrSY4QszcAXlyL9AcvQmEzXEwQu5L9aS0ZjKqjIVCgjBv5P5Q+A6ors1/tGBpBd+kLS2lk5vRqqSEfOatD6dbqUbI0QMSDpGf3obpO9ETmuGyfBFKE8JXrcQOuqyoklmgNDGdvzbZ4rI9jXAu5yXK5C2LsSdi32eAXzvTSkcGxj91ksRV4t1IAYYdau3Ch4y5cNPDPY2NY7Y8gJL9nkeviBXKAK6or9drWwudvQYZ35xw52L5veFl3Shz4c6dGgIGmlk17zV+ihzPNtaOzN0dCnkg9O4KnUMg5Ct47mvejwwpe2S/sZPelnUj5QtEhaPmn8nt70E26hKiGB3d7aL+9vmlvRxeoUCYEo+7Sf4gU=",
+													"type": "text"
+												},
+												{
+													"key": "file",
+													"type": "file",
+													"src": ""
+												}
+											]
+										},
+										"url": {
+											"raw": "https://dasprod-store.s3.amazonaws.com",
+											"protocol": "https",
+											"host": [
+												"dasprod-store",
+												"s3",
+												"amazonaws",
+												"com"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "a00e339e-1bc6-41c0-8fc3-6d40dc33a072",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "c913b30e-fc67-403b-84ba-a75127d4d29b",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								}
+							],
+							"_postman_isSubFolder": true
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Activity",
+					"item": [
+						{
+							"name": "DELETE commands",
+							"item": [
+								{
+									"name": "Delete activity",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "0bf87f3f-0d23-46b1-82cf-79c821285114",
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer {{dasApiToken}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{dasApiRoot}}/activities/FileUpgraderActivity",
+											"host": [
+												"{{dasApiRoot}}"
+											],
+											"path": [
+												"activities",
+												"FileUpgraderActivity"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete activity version",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "42489332-f896-4c85-8e08-2718a14a16a2",
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer {{dasApiToken}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{dasApiRoot}}/activities/FileUpgraderActivity/versions/{{fileUpgraderActivityVersion}}",
+											"host": [
+												"{{dasApiRoot}}"
+											],
+											"path": [
+												"activities",
+												"FileUpgraderActivity",
+												"versions",
+												"{{fileUpgraderActivityVersion}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete activity alias",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "0bf87f3f-0d23-46b1-82cf-79c821285114",
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer {{dasApiToken}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{dasApiRoot}}/activities/FileUpgraderActivity/aliases/test",
+											"host": [
+												"{{dasApiRoot}}"
+											],
+											"path": [
+												"activities",
+												"FileUpgraderActivity",
+												"aliases",
+												"test"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "Modify existing activity",
+							"item": [
+								{
+									"name": "Create new activity version",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "920e6666-ec9b-41a3-afd8-e769f4ce6a8c",
+												"exec": [
+													"var body = JSON.parse(responseBody);",
+													"pm.environment.set(\"fileUpgraderActivityVersion\", body[\"version\"]);",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer {{dasApiToken}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n\t\"commandLine\": [ \"$(engine.path)\\\\\\\\revitcoreconsole.exe /i $(args[rvtFile].path) /al $(appbundles[FileUpgraderApp].path)\" ],\r\n\t\"parameters\": {\r\n\t  \"rvtFile\": {\r\n\t\t\"zip\": false,\r\n\t\t\"ondemand\": false,\r\n\t\t\"verb\": \"get\",\r\n\t\t\"description\": \"Input Revit model\",\r\n\t\t\"required\": true\r\n\t  },\r\n\t  \"resultrvt\": {\r\n\t\t\"zip\": false,\r\n\t\t\"ondemand\": false,\r\n\t\t\"verb\": \"put\",\r\n\t\t\"description\": \"upgraded revit Rvt file\",\r\n\t\t\"required\": false,\r\n\t\t\"localName\": \"revitupgrade.rvt\"\r\n\t  },\r\n\t  \"resultrfa\": {\r\n\t\t\"zip\": false,\r\n\t\t\"ondemand\": false,\r\n\t\t\"verb\": \"put\",\r\n\t\t\"description\": \"upgraded revit Rfa file\",\r\n\t\t\"required\": false,\r\n\t\t\"localName\": \"revitupgrade.rfa\"\r\n\t  },\r\n\t  \"resultrte\": {\r\n\t\t\"zip\": false,\r\n\t\t\"ondemand\": false,\r\n\t\t\"verb\": \"put\",\r\n\t\t\"description\": \"upgraded revit Rte file\",\r\n\t\t\"required\": false,\r\n\t\t\"localName\": \"revitupgrade.rte\"\r\n\t  }\r\n\t},\r\n\t\"engine\": \"Autodesk.Revit+2019\",\r\n\t\"appbundles\": [ \"{{dasNickName}}.FileUpgraderApp+prod\" ],\r\n\t\"description\": \"Upgrade revit file to lastest version from old versions.\"\r\n}"
+										},
+										"url": {
+											"raw": "{{dasApiRoot}}/activities/FileUpgraderActivity/versions",
+											"host": [
+												"{{dasApiRoot}}"
+											],
+											"path": [
+												"activities",
+												"FileUpgraderActivity",
+												"versions"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Modify activity alias details",
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "",
+												"value": "",
+												"disabled": true
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer {{dasApiToken}}"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"version\": 3\r\n}"
+										},
+										"url": {
+											"raw": "{{dasApiRoot}}/activities/FileUpgraderActivity/aliases/prod",
+											"host": [
+												"{{dasApiRoot}}"
+											],
+											"path": [
+												"activities",
+												"FileUpgraderActivity",
+												"aliases",
+												"prod"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "74f12822-a05d-4f64-a40c-47ebceb2fde5",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "5f4f5c1f-b39d-4005-8622-e21e12086d7d",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								}
+							],
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "GET commands",
+							"item": [
+								{
+									"name": "Get activity version details",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "",
+												"value": "",
+												"disabled": true
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer {{dasApiToken}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{dasApiRoot}}/activities/FileUpgraderActivity/versions/{{fileUpgraderActivityVersion}}",
+											"host": [
+												"{{dasApiRoot}}"
+											],
+											"path": [
+												"activities",
+												"FileUpgraderActivity",
+												"versions",
+												"{{fileUpgraderActivityVersion}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get activity details",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "",
+												"value": "",
+												"disabled": true
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer {{dasApiToken}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{dasApiRoot}}/activities/{{dasNickName}}.FileUpgraderActivity+dev",
+											"host": [
+												"{{dasApiRoot}}"
+											],
+											"path": [
+												"activities",
+												"{{dasNickName}}.FileUpgraderActivity+dev"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get list of activities",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "",
+												"value": "",
+												"disabled": true
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer {{dasApiToken}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{dasApiRoot}}/activities",
+											"host": [
+												"{{dasApiRoot}}"
+											],
+											"path": [
+												"activities"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get activity aliases details",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "",
+												"value": "",
+												"disabled": true
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer {{dasApiToken}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{dasApiRoot}}/activities/FileUpgraderActivity/aliases/dev",
+											"host": [
+												"{{dasApiRoot}}"
+											],
+											"path": [
+												"activities",
+												"FileUpgraderActivity",
+												"aliases",
+												"dev"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get activity versions",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "",
+												"value": "",
+												"disabled": true
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer {{dasApiToken}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{dasApiRoot}}/activities/FileUpgraderActivity/versions",
+											"host": [
+												"{{dasApiRoot}}"
+											],
+											"path": [
+												"activities",
+												"FileUpgraderActivity",
+												"versions"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get activity aliases",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "",
+												"value": "",
+												"disabled": true
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer {{dasApiToken}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{dasApiRoot}}/activities/FileUpgraderActivity/aliases",
+											"host": [
+												"{{dasApiRoot}}"
+											],
+											"path": [
+												"activities",
+												"FileUpgraderActivity",
+												"aliases"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "Create",
+							"item": [
+								{
+									"name": "Create activity",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "81b7da19-decc-40d8-9c79-294dd71cffa3",
+												"exec": [
+													"var body = JSON.parse(responseBody);",
+													"pm.environment.set(\"fileUpgraderActivityVersion\", body[\"version\"]);",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer {{dasApiToken}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n\t\"id\": \"FileUpgraderActivity\",\r\n\t\"commandLine\": [ \"$(engine.path)\\\\\\\\revitcoreconsole.exe /i $(args[rvtFile].path) /al $(appbundles[FileUpgraderApp].path)\" ],\r\n\t\"parameters\": {\r\n\t  \"rvtFile\": {\r\n\t\t\"zip\": false,\r\n\t\t\"ondemand\": false,\r\n\t\t\"verb\": \"get\",\r\n\t\t\"description\": \"Input Revit model\",\r\n\t\t\"required\": true\r\n\t  },\r\n\t  \"resultrvt\": {\r\n\t\t\"zip\": false,\r\n\t\t\"ondemand\": false,\r\n\t\t\"verb\": \"put\",\r\n\t\t\"description\": \"upgraded revit Rvt file\",\r\n\t\t\"required\": false,\r\n\t\t\"localName\": \"revitupgrade.rvt\"\r\n\t  },\r\n\t  \"resultrfa\": {\r\n\t\t\"zip\": false,\r\n\t\t\"ondemand\": false,\r\n\t\t\"verb\": \"put\",\r\n\t\t\"description\": \"upgraded revit Rfa file\",\r\n\t\t\"required\": false,\r\n\t\t\"localName\": \"revitupgrade.rfa\"\r\n\t  },\r\n\t  \"resultrte\": {\r\n\t\t\"zip\": false,\r\n\t\t\"ondemand\": false,\r\n\t\t\"verb\": \"put\",\r\n\t\t\"description\": \"upgraded revit Rte file\",\r\n\t\t\"required\": false,\r\n\t\t\"localName\": \"revitupgrade.rte\"\r\n\t  }\r\n\t},\r\n\t\"engine\": \"Autodesk.Revit+2019\",\r\n\t\"appbundles\": [ \"{{dasNickName}}.FileUpgraderApp+dev\" ],\r\n\t\"description\": \"Upgrade revit file to lastest version from old versions.\"\r\n}"
+										},
+										"url": {
+											"raw": "{{dasApiRoot}}/activities",
+											"host": [
+												"{{dasApiRoot}}"
+											],
+											"path": [
+												"activities"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create activity alias",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer {{dasApiToken}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\": \"dev\",\r\n    \"version\": {{fileUpgraderActivityVersion}}\r\n}"
+										},
+										"url": {
+											"raw": "{{dasApiRoot}}/activities/FileUpgraderActivity/aliases",
+											"host": [
+												"{{dasApiRoot}}"
+											],
+											"path": [
+												"activities",
+												"FileUpgraderActivity",
+												"aliases"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "c85bae28-5b3b-44ce-b2bc-b2966ac94b6f",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "43045e4a-b6ed-41ba-b80f-3cc41a55738a",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								}
+							],
+							"_postman_isSubFolder": true
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Workitem",
+					"item": [
+						{
+							"name": "Send Workitem",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "60c34afe-ea9f-4726-acce-414e545ba99a",
+										"exec": [
+											"var body = JSON.parse(responseBody);",
+											"pm.environment.set(\"fileUpgraderWorkitemId\", body[\"id\"]);",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"disabled": false
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{dasApiToken}}",
+										"disabled": false
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"activityId\":\"{{dasNickName}}.FileUpgraderActivity+dev\",\n    \"arguments\":{\n        \"rvtFile\":{\n            \"url\":\"https://developer.api.autodesk.com/oss/v2/buckets/{{bucketKey}}/objects/RevitNative1.rvt\",\n\t          \"Headers\":{\n\t            \"Authorization\":\"Bearer {{dataApiToken}}\"\n\t        }\n        },\n        \"resultrvt\":{\n            \"verb\":\"put\",\n            \"url\":\"{{fileUpgraderResultUrl}}\"\n        }\n    }\n}"
+								},
+								"url": {
+									"raw": "{{dasApiRoot}}/workitems",
+									"host": [
+										"{{dasApiRoot}}"
+									],
+									"path": [
+										"workitems"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Workitem",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{dasApiToken}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{dasApiRoot}}/workitems/{{fileUpgraderWorkitemId}}",
+									"host": [
+										"{{dasApiRoot}}"
+									],
+									"path": [
+										"workitems",
+										"{{fileUpgraderWorkitemId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Workitem status",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{dasApiToken}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{dasApiRoot}}/workitems/{{fileUpgraderWorkitemId}}",
+									"host": [
+										"{{dasApiRoot}}"
+									],
+									"path": [
+										"workitems",
+										"{{fileUpgraderWorkitemId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "7dc75d62-f83b-42cb-ace9-605c1fa146c2",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "11543936-40d8-47e3-b21d-2391d3214e16",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Data Helper API",
+			"item": [
+				{
+					"name": "Authenticate",
+					"item": [
+						{
+							"name": "New token for Data API",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "a71542d4-3c80-4ba4-af28-ad9d74406c91",
+										"type": "text/javascript",
+										"exec": [
+											"var body = JSON.parse(responseBody);",
+											"pm.environment.set(\"dataApiToken\", body[\"access_token\"]);",
+											"",
+											"var bucketKey = pm.environment.get(\"dasNickName\").toLowerCase();",
+											"pm.environment.set(\"bucketKey\", bucketKey);",
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/x-www-form-urlencoded"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "client_id",
+											"value": "{{client_id}}",
+											"type": "text"
+										},
+										{
+											"key": "client_secret",
+											"value": "{{client_secret}}",
+											"type": "text"
+										},
+										{
+											"key": "grant_type",
+											"value": "client_credentials",
+											"type": "text"
+										},
+										{
+											"key": "scope",
+											"value": "bucket:read bucket:update bucket:create bucket:delete data:write data:create data:read",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{baseUrl}}/authentication/v1/authenticate",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"authentication",
+										"v1",
+										"authenticate"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Bucket",
+					"item": [
+						{
+							"name": "Create Bucket",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "5b993251-5b30-4bab-bc41-2f15cc54d56e",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "4579fac2-2274-4de2-b84c-76d093c59bd8",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{dataApiToken}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"bucketKey\": \"{{bucketKey}}\",\r\n    \"policyKey\": \"transient\"\r\n}\r\n"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/oss/v2/buckets",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"oss",
+										"v2",
+										"buckets"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get bucket details",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "5b993251-5b30-4bab-bc41-2f15cc54d56e",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "4579fac2-2274-4de2-b84c-76d093c59bd8",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{dataApiToken}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{baseUrl}}/oss/v2/buckets/{{bucketKey}}/details",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"oss",
+										"v2",
+										"buckets",
+										"{{bucketKey}}",
+										"details"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get objects in a bucket",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "f0586fdc-689e-414b-a469-5b428c52b995",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{dataApiToken}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{baseUrl}}/oss/v2/buckets/{{bucketKey}}/objects",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"oss",
+										"v2",
+										"buckets",
+										"{{bucketKey}}",
+										"objects"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "DELETE Data",
+					"item": [
+						{
+							"name": "Delete DA result",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "8bd53c19-13b6-4810-ab72-72e826cd7625",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "9fa205f9-6d48-4430-9609-ca833ff4e8ae",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{dataApiToken}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{baseUrl}}/oss/v2/buckets/{{bucketKey}}/objects/FileUpgrader.rvt",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"oss",
+										"v2",
+										"buckets",
+										"{{bucketKey}}",
+										"objects",
+										"FileUpgrader.rvt"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete bucket",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "8bd53c19-13b6-4810-ab72-72e826cd7625",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "475fe110-53a8-4c91-a99d-7fef685ef94c",
+										"type": "text/javascript",
+										"exec": [
+											"var bucketKey = pm.environment.get(\"dasNickName\").toLowerCase();",
+											"pm.environment.set(\"bucketKey\", bucketKey);",
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{dataApiToken}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{baseUrl}}/oss/v2/buckets/{{bucketKey}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"oss",
+										"v2",
+										"buckets",
+										"{{bucketKey}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "FileUpgraderData",
+					"item": [
+						{
+							"name": "Create signed URL with write access",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "a51a22b3-9614-4b93-949f-543ed399964d",
+										"type": "text/javascript",
+										"exec": [
+											"var body = JSON.parse(responseBody);",
+											"pm.environment.set(\"fileUpgraderResultUrl\", body[\"signedUrl\"]);",
+											""
+										]
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "9fa205f9-6d48-4430-9609-ca833ff4e8ae",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{dataApiToken}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/oss/v2/buckets/{{bucketKey}}/objects/FileUpgrader.rvt/signed?access=write",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"oss",
+										"v2",
+										"buckets",
+										"{{bucketKey}}",
+										"objects",
+										"FileUpgrader.rvt",
+										"signed"
+									],
+									"query": [
+										{
+											"key": "access",
+											"value": "write"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Download result",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "c69d77e5-bb7f-4c4e-9f83-ad6e1f357ed6",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "9fa205f9-6d48-4430-9609-ca833ff4e8ae",
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{dataApiToken}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{baseUrl}}/oss/v2/buckets/{{bucketKey}}/objects/FileUpgrader.rvt",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"oss",
+										"v2",
+										"buckets",
+										"{{bucketKey}}",
+										"objects",
+										"FileUpgrader.rvt"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create empty output object",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "5b993251-5b30-4bab-bc41-2f15cc54d56e",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "3fb6c434-efa2-4fed-bc11-a7926e3e70ab",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{dataApiToken}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{baseUrl}}/oss/v2/buckets/{{bucketKey}}/objects/FileUpgrader.rvt",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"oss",
+										"v2",
+										"buckets",
+										"{{bucketKey}}",
+										"objects",
+										"FileUpgrader.rvt"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "82de90ad-72e0-45d9-bf06-3a8d8e98a515",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "9677fa19-ccaf-433e-97f2-57fcb0baf72b",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "063ca655-0ba8-4655-9065-a9e867825bb7",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "2abd4cee-9729-4c81-a804-eb5997634c54",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "New token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var body = JSON.parse(responseBody);",
+							"pm.environment.set(\"dasApiToken\", body[\"access_token\"]);",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "client_id",
+							"value": "{{client_id}}",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "{{client_secret}}",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "text"
+						},
+						{
+							"key": "scope",
+							"value": "code:all",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseUrl}}/authentication/v1/authenticate",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"authentication",
+						"v1",
+						"authenticate"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

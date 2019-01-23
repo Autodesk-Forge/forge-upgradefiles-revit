@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ApplicationPackage>
+  <Components Description="File upgrade app">
+    <RuntimeRequirements OS="Win64"
+                         Platform="Revit"
+                         SeriesMin="R2019"
+                         SeriesMax="R2019" />
+    <ComponentEntry AppName="FileUgrader"
+                    Version="1.0.0"
+                    ModuleName="./Contents/FileUpgrader.addin"
+                    AppDescription="Upgrade Revit files to latest version"
+                    LoadOnCommandInvocation="False"
+                    LoadOnRevitStartup="True" />
+  </Components>
+</ApplicationPackage>

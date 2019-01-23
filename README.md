@@ -24,7 +24,13 @@ This sample demostrated how to upgrade Revit file/family to the latest version u
 # Live Demo
 [https://fileupgradersample.herokuapp.com/](https://fileupgradersample.herokuapp.com/)
 
-# Setup
+# Main Parts of The Work
+1. Create a Revit Plugin to be used within AppBundle of Design Automation for Revit. Please check [PlugIn](./FileUpgrader/PlugIn/) 
+2. Create your App, upload the AppBundle, define your Activity and test the workitem with the Postman collection under [Postman Collection](./FileUpgrader/PostmanCollection/) 
+
+3. Create the Web App to call the workitem.
+
+# Web App Setup
 
 ## Prerequisites
 
@@ -66,6 +72,10 @@ Windows (use **Node.js command line** from Start menu)
 
 Open the browser: [http://localhost:3000](http://localhost:3000).
 
+## How to use
+1. Select Revit file in BIM360 Hub from Source File/Folder, Right Click and select `Upgrade to Revit 2019`. It will create a new version after successfully upgraded.
+2. Select Source Folder and Destination Folder, then click `Upgrade`, it will upgrade all the files under the folder to destinated folder.
+
 ## Main Backend API used
 ### File upgrade API based on Design Automation API
 - **POST      /api/forge/da4revit/v1/upgrader/files/:source_file_url/folders/:destinate_folder_url**
@@ -94,7 +104,7 @@ you need to use ngrok to configure your Local Server for testing, please [WebHoo
 
 The [Autodesk Forge](https://www.npmjs.com/package/forge-apis) packages is included by default. Some other non-Autodesk packaged are used, including [express](https://www.npmjs.com/package/express) and [multer](https://www.npmjs.com/package/multer) for upload.
 
-# Further Reading
+## Further Reading
 
 Documentation:
 - This sample is based on [Learn Forge Tutorial](https://github.com/Autodesk-Forge/learn.forge.viewhubmodels/tree/nodejs), please check details there about the basic framework if you are not familar. 
@@ -102,9 +112,8 @@ Documentation:
 - [Design Automation API](https://forge.autodesk.com/en/docs/design-automation/v3/developers_guide/overview/)
 - [BIM 360 API](https://developer.autodesk.com/en/docs/bim360/v1/overview/) and [App Provisioning](https://forge.autodesk.com/blog/bim-360-docs-provisioning-forge-apps)
 - [Data Management API](https://developer.autodesk.com/en/docs/data/v2/overview/)
-- [Viewer](https://developer.autodesk.com/en/docs/viewer/v6)
 
-### Tips & Tricks
+## Tips & Tricks
 
 For local development/testing, consider use [nodemon](https://www.npmjs.com/package/nodemon) package, which auto restart your node application after any modification on your code. To install it, use:
 
@@ -116,13 +125,14 @@ Then, instead of **npm run dev**, use the following:
 
 Which executes **nodemon server.js --ignore www/**, where the **--ignore** parameter indicates that the app should not restart if files under **www** folder are modified.
 
-### Troubleshooting
+## Troubleshooting
 
 After installing Github desktop for Windows, on the Git Shell, if you see a ***error setting certificate verify locations*** error, use the following:
 
     git config --global http.sslverify "false"
 
-### Limitation
+## Limitation
+- For Demo purpose, we only support 5 files to be upgraded as maximum.
 - Only support upgrading to Revit 2019.
 - Override is not implemented yet. 
 - Need to open the source folder to list all the files first

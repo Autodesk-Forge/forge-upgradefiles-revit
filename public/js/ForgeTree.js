@@ -68,6 +68,14 @@ $(document).ready(function () {
     });
   })
 
+  $.getJSON("/api/forge/oauth/v1/clientid", function (res) {
+    $("#ClientID").val(res.id);
+    $("#provisionAccountSave").click(function () {
+      $('#provisionAccountModal').modal('toggle');
+      $('#sourceHubs').jstree(true).refresh();
+      $('#destinationHubs').jstree(true).refresh();
+    });
+  });  
 
   $('#upgradeBtn').click(async function () {
     let sourceNode = $('#sourceHubs').jstree(true).get_selected(true)[0];

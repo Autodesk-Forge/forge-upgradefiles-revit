@@ -1,18 +1,19 @@
-# design.automation.revit.family.upgrader.nodejs.sample
+# design.automation-nodejs-revit.family.upgrader
 
 [![Node.js](https://img.shields.io/badge/Node.js-8.0-blue.svg)](https://nodejs.org/)
 [![npm](https://img.shields.io/badge/npm-4.0-blue.svg)](https://www.npmjs.com/)
-![Platforms](https://img.shields.io/badge/platform-windows%20%7C%20osx%20%7C%20linux-lightgray.svg)
-[![License](http://img.shields.io/:license-mit-blue.svg)](http://opensource.org/licenses/MIT)
-
-[![oAuth2](https://img.shields.io/badge/oAuth2-v1-green.svg)](http://developer.autodesk.com/)
+![Platforms](https://img.shields.io/badge/Web-Windows%20%7C%20MacOS%20%7C%20Linux-lightgray.svg)
 [![Data-Management](https://img.shields.io/badge/Data%20Management-v1-green.svg)](http://developer.autodesk.com/)
-[![OSS](https://img.shields.io/badge/OSS-v2-green.svg)](http://developer.autodesk.com/)
-[![Model-Derivative](https://img.shields.io/badge/Model%20Derivative-v2-green.svg)](http://developer.autodesk.com/)
 [![Design-Automation](https://img.shields.io/badge/Design%20Automation-v3-green.svg)](http://developer.autodesk.com/)
-[![BIM-360](https://img.shields.io/badge/BIM%20360-v1-green.svg)](http://developer.autodesk.com/)
 
-![Intermediate](https://img.shields.io/badge/Level-Basic-green.svg)
+
+![Windows](https://img.shields.io/badge/Plugins-Windows-lightgrey.svg)
+![.NET](https://img.shields.io/badge/.NET%20Framework-4.7-blue.svg)
+[![Revit-2019](https://img.shields.io/badge/Revit-2019-lightgrey.svg)](http://autodesk.com/revit)
+
+
+![Advanced](https://img.shields.io/badge/Level-Advanced-red.svg)
+[![MIT](https://img.shields.io/badge/License-MIT-blue.svg)](http://opensource.org/licenses/MIT)
 
 # Description
 
@@ -36,7 +37,7 @@ This sample demostrated how to upgrade Revit file/family to the latest version u
 
 1. **Forge Account**: Learn how to create a Forge Account, activate subscription and create an app at [this tutorial](http://learnforge.autodesk.io/#/account/). 
 2. **Visual Code**: Visual Code (Windows or MacOS).
-3. **JavaScript ES6** syntax for server-side
+3. **JavaScript ES6** syntax for server-side.
 4. **JavaScript** basic knowledge with **jQuery**
 
 
@@ -98,7 +99,8 @@ you need to use ngrok to configure your Local Server for testing, please [WebHoo
 - **GET       /api/forge/oauth/v1/url**
 - **GET       /api/forge/oauth/v1/signout**
 - **GET       /api/forge/oauth/v1/token**
-- **GET      /api/forge/callback/oauth**
+- **GET       /api/forge/oauth/v1/clientid**
+- **GET       /api/forge/callback/oauth**
 
 ## Packages used
 

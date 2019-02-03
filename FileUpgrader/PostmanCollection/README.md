@@ -25,7 +25,7 @@ Postman collection to create App, define activity, and call the WorkItem.
 
 9. Publish your Design Automation activity.
 
-10. Prepare your input and output url using the Postman APIs under folder `Data Helper API`. You need to upload an old version of revit file as input Url, you can use [Revit2014.rvt](../Revit2014.rvt) for test.
+10. Prepare your input and output url using the Postman APIs under folder `Data Helper API`. You need to upload an old version of revit file as input Url, you can use [Revit2014.rvt](./Revit2014.rvt) for test.
 
 11. Post your Design Automation workitem.
 

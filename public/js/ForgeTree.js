@@ -179,48 +179,50 @@ async function upgradeFolder(sourceNode, destinationNode) {
     return false;
 
   let instance = $("#sourceHubs").jstree(true);
+  instance.open_node(sourceNode, async function(e, data){
+    let childrenDom = e.children;
 
-  let childrenDom = instance.get_children_dom(sourceNode);
-
-  for (let i = 0; i < childrenDom.length; i++) {
-    if( fileNumber >= FileLimitation ){
-      return;
-    }
-
-    let nodeDom = childrenDom[i];
-    let node = instance.get_json(nodeDom);
-
-    if (node.type === 'folders') {
-      let destinatedSubFolder = null;
-      try {
-        destinatedSubFolder = await createNamedFolder(destinationNode, node.text)
-        addGroupListItem(node.text, 'created', ItemType.FOLDER, 'active' )
-      } catch (err) {
-        addGroupListItem(node.text, 'failed', ItemType.FOLDER, 'list-group-item-danger' )
+    for (let i = 0; i < childrenDom.length; i++) {
+      if( fileNumber >= FileLimitation ){
+        return;
       }
-      try{
-        await upgradeFolder(node, destinatedSubFolder);
-      }catch(err){
-        addGroupListItem(node.text,'failed', ItemType.FOLDER, 'list-group-item-danger' )
-      }
-    }
-    if (node.type === 'items') {
-      const fileParts     = node.text.split('.');
-      const fileExtension = fileParts[fileParts.length-1].toLowerCase();
-      if( (bSupportRvt && fileExtension === 'rvt') 
-        || (bSupportRfa && fileExtension === 'rfa') 
-        || (bSupportRte && fileExtension === 'rte')){
+  
+      let nodeDom = childrenDom[i];
+      let node = instance.get_json(nodeDom);
+  
+      if (node.type === 'folders') {
+        let destinatedSubFolder = null;
         try {
-          let upgradeInfo = await upgradeFileToFolder(node.id, destinationNode.id);
-          workitemList.push(upgradeInfo.workItemId);
-          addGroupListItem(node.text, upgradeInfo.workItemStatus, ItemType.FILE, 'list-group-item-info', upgradeInfo.workItemId );
+          destinatedSubFolder = await createNamedFolder(destinationNode, node.text)
+          addGroupListItem(node.text, 'created', ItemType.FOLDER, 'active' )
         } catch (err) {
-          addGroupListItem(node.text, 'failed', ItemType.FILE, 'list-group-item-danger' );
+          addGroupListItem(node.text, 'failed', ItemType.FOLDER, 'list-group-item-danger' )
         }
-        fileNumber = fileNumber + 1;
-      } 
+        try{
+          await upgradeFolder(node, destinatedSubFolder);
+        }catch(err){
+          addGroupListItem(node.text,'failed', ItemType.FOLDER, 'list-group-item-danger' )
+        }
+      }
+      if (node.type === 'items') {
+        const fileParts     = node.text.split('.');
+        const fileExtension = fileParts[fileParts.length-1].toLowerCase();
+        if( (bSupportRvt && fileExtension === 'rvt') 
+          || (bSupportRfa && fileExtension === 'rfa') 
+          || (bSupportRte && fileExtension === 'rte')){
+          try {
+            let upgradeInfo = await upgradeFileToFolder(node.id, destinationNode.id);
+            workitemList.push(upgradeInfo.workItemId);
+            addGroupListItem(node.text, upgradeInfo.workItemStatus, ItemType.FILE, 'list-group-item-info', upgradeInfo.workItemId );
+          } catch (err) {
+            addGroupListItem(node.text, 'failed', ItemType.FILE, 'list-group-item-danger' );
+          }
+          fileNumber = fileNumber + 1;
+        } 
+      }
     }
-  }
+  
+  }, true);
 };
 
 

@@ -133,8 +133,7 @@ After installing Github desktop for Windows, on the Git Shell, if you see a ***e
 - For Demo purpose, we only support **5** files to be upgraded as maximum
 - Only support upgrading to Revit 2019
 - Override is not implemented yet
-- While upgrading a folder, need to open the source folder to list all the files first
-
+- Only support upgrade file from/to BIM360
 ## License
 
 This sample is licensed under the terms of the [MIT License](http://opensource.org/licenses/MIT). Please see the [LICENSE](LICENSE) file for full details.

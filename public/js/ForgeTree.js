@@ -183,10 +183,6 @@ async function upgradeFolder(sourceNode, destinationNode) {
     let childrenDom = e.children;
 
     for (let i = 0; i < childrenDom.length; i++) {
-      if( fileNumber >= FileLimitation ){
-        return;
-      }
-  
       let nodeDom = childrenDom[i];
       let node = instance.get_json(nodeDom);
   
@@ -207,18 +203,20 @@ async function upgradeFolder(sourceNode, destinationNode) {
       if (node.type === 'items') {
         const fileParts     = node.text.split('.');
         const fileExtension = fileParts[fileParts.length-1].toLowerCase();
-        if( (bSupportRvt && fileExtension === 'rvt') 
-          || (bSupportRfa && fileExtension === 'rfa') 
-          || (bSupportRte && fileExtension === 'rte')){
+        if ((bSupportRvt && fileExtension === 'rvt') ||
+          (bSupportRfa && fileExtension === 'rfa') ||
+          (bSupportRte && fileExtension === 'rte')) {
+          if (fileNumber++ >= FileLimitation) {
+            return;
+          }
           try {
             let upgradeInfo = await upgradeFileToFolder(node.id, destinationNode.id);
             workitemList.push(upgradeInfo.workItemId);
-            addGroupListItem(node.text, upgradeInfo.workItemStatus, ItemType.FILE, 'list-group-item-info', upgradeInfo.workItemId );
+            addGroupListItem(node.text, upgradeInfo.workItemStatus, ItemType.FILE, 'list-group-item-info', upgradeInfo.workItemId);
           } catch (err) {
-            addGroupListItem(node.text, 'failed', ItemType.FILE, 'list-group-item-danger' );
+            addGroupListItem(node.text, 'failed', ItemType.FILE, 'list-group-item-danger');
           }
-          fileNumber = fileNumber + 1;
-        } 
+        }
       }
     }
   

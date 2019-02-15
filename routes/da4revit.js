@@ -316,7 +316,7 @@ router.get('/da4revit/v1/upgrader/files/:file_workitem_id', async(req, res, next
 ///////////////////////////////////////////////////////////////////////
 ///
 ///////////////////////////////////////////////////////////////////////
-router.post('/da4revit/callback', async (req, res, next) => {
+router.post('/callback/designautomation', async (req, res, next) => {
     // Best practice is to tell immediately that you got the call
     // so return the HTTP call and proceed with the business logic
     res.status(202).end();

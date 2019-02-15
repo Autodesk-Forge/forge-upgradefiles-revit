@@ -35,11 +35,11 @@ module.exports = {
         public: ['viewables:read']
     },
     designAutomation:{
-        callback_DA_Url: process.env.FORGE_WORK_ITEM_CALLBACK_URL,
+        revit_IO_WebHook_Url: process.env.FORGE_WEBHOOK_URL,
         revit_IO_Endpoint: 'https://developer.api.autodesk.com/da/us-east/v3/',
-        revit_IO_Nick_Name: 'fileupgradersample',
-        revit_IO_App_Name: 'FileUpgraderApp+prod',
-        revit_IO_Activity_Name: 'FileUpgraderActivity+prod',
+        revit_IO_Nick_Name:     process.env.REVIT_IO_NICK_NAME,
+        revit_IO_App_Name:      process.env.REVIT_IO_APP_NAME,
+        revit_IO_Activity_Name: process.env.REVIT_IO_ACTIVITY_NAME,
     }
 
 

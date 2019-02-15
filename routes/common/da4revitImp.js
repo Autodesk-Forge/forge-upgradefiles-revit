@@ -422,7 +422,7 @@ function createPostWorkitemBody(inputUrl, outputUrl, fileExtension, access_token
                     },
                     onComplete: {
                         verb: "post",
-                        url: designAutomation.callback_DA_Url
+                        url: designAutomation.revit_IO_WebHook_Url
                     }
                 }
             };
@@ -446,7 +446,7 @@ function createPostWorkitemBody(inputUrl, outputUrl, fileExtension, access_token
                     },
                     onComplete: {
                         verb: "post",
-                        url: designAutomation.callback_DA_Url
+                        url: designAutomation.revit_IO_WebHook_Url
                     }
                 }
             };
@@ -470,7 +470,7 @@ function createPostWorkitemBody(inputUrl, outputUrl, fileExtension, access_token
                     },
                     onComplete: {
                         verb: "post",
-                        url: designAutomation.callback_DA_Url
+                        url: designAutomation.revit_IO_WebHook_Url
                     }
                 }
             };

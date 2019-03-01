@@ -329,7 +329,7 @@ function prepareUserHubsTree( userHubs) {
     },
     "plugins": ["types", "state", "sort", "contextmenu"],
     contextmenu: { items: (userHubs === '#sourceHubs'? autodeskCustomMenuSource: autodeskCustomMenuDestination)},
-    "state": { "key": "autodeskHubs" }// key restore tree state
+    "state": { "key": userHubs }// key restore tree state
   }).bind("activate_node.jstree", function (evt, data) {
   });
 }

@@ -20,7 +20,7 @@
 This sample demostrated how to upgrade Revit project/family/template to the latest version using Design Automation for Revit API, including upgrade one file or one folder.
 
 # Thumbnail
-![thumbnail](/public/res/thumbnail.png)
+![thumbnail](/thumbnail.png)
 
 # Live Demo
 [https://fileupgradersample.herokuapp.com/](https://fileupgradersample.herokuapp.com/)
@@ -51,9 +51,17 @@ Install [NodeJS](https://nodejs.org), version 8 or newer.
 
 Clone this project or download it (this `nodejs` branch only). It's recommended to install [GitHub desktop](https://desktop.github.com/). To clone it via command line, use the following (**Terminal** on MacOSX/Linux, **Git Shell** on Windows):
 
-    git clone -b nodejs https://github.com/Autodesk-Forge/design.automation-nodejs-revit.file.upgrader
+    git clone https://github.com/Autodesk-Forge/design.automation-nodejs-revit.file.upgrader
 
-To run it, install the required packages, set the enviroment variables with your client ID & secret and finally start it. Via command line, navigate to the folder where this repository was cloned and use the following:
+Install the required packages using `npm install`.
+
+### ngrok
+
+Run `ngrok http 3000` to create a tunnel to your local machine, then copy the address into the `FORGE_WEBHOOK_URL` environment variable. Please check [WebHooks](https://forge.autodesk.com/en/docs/webhooks/v1/tutorials/configuring-your-server/) for details.
+
+### Environment variables
+
+Set the enviroment variables with your client ID & secret and finally start it. Via command line, navigate to the folder where this repository was cloned and use the following:
 
 Mac OSX/Linux (Terminal)
 
@@ -79,17 +87,15 @@ Windows (use **Node.js command line** from Start menu)
     set REVIT_IO_ACTIVITY_NAME=<<YOUR DESIGN AUTOMATION FOR REVIT ACTIVITY NAME>>
     npm start
 
-Open the browser: [http://localhost:3000](http://localhost:3000).
+### Using the app
 
-### ngrok
-Run `ngrok http 3000` to create a tunnel to your local machine, then copy the address into the `FORGE_WEBHOOK_URL` environment variable. Please check [WebHooks](https://forge.autodesk.com/en/docs/webhooks/v1/tutorials/configuring-your-server/) for details. 
-
-### Start the app
 Open the browser: [http://localhost:3000](http://localhost:3000), there are 2 ways to upgrade files: 
+
 1. Select Revit file in BIM360 Hub from Source File/Folder, Right Click and select `Upgrade to Revit 2019`. It will create a new version after successfully upgraded.
 2. Select Source Folder and Destination Folder, then click `Upgrade`, it will upgrade all the files under the folder to destinated folder.
 
 ## Main Backend API used
+
 ### File upgrade API based on Design Automation API at **routes/da4revit.js**
 - POST      /api/forge/da4revit/v1/upgrader/files/:source_file_url/folders/:destinate_folder_url
 - POST      /api/forge/da4revit/v1/upgrader/files
@@ -114,7 +120,7 @@ Open the browser: [http://localhost:3000](http://localhost:3000), there are 2 wa
 
 ## Packages used
 
-The [Autodesk Forge](https://www.npmjs.com/package/forge-apis) packages is included by default. Some other non-Autodesk packaged are used, including [socket.io](https://www.npmjs.com/package/socket.io), [express](https://www.npmjs.com/package/express) and [multer](https://www.npmjs.com/package/multer) for upload.
+The [Autodesk Forge](https://www.npmjs.com/package/forge-apis) packages is included by default. Some other non-Autodesk packaged are used, including [socket.io](https://www.npmjs.com/package/socket.io), [express](https://www.npmjs.com/package/express).
 
 ## Further Reading
 
@@ -140,6 +146,8 @@ After installing Github desktop for Windows, on the Git Shell, if you see a ***e
 - Only support upgrading to Revit 2019
 - Override is not implemented yet
 - Only support upgrade file from/to BIM360
+- Client JavaScript requires modern browser
+
 ## License
 
 This sample is licensed under the terms of the [MIT License](http://opensource.org/licenses/MIT). Please see the [LICENSE](LICENSE) file for full details.

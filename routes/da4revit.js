@@ -27,7 +27,7 @@ const { OAuth } = require('./common/oauthImp');
 
 const { 
     getWorkitemStatus, 
-    cancelWrokitem,
+    cancelWorkitem,
     upgradeFile, 
     getLatestVersionInfo, 
     getNewCreatedStorageInfo, 
@@ -272,7 +272,7 @@ router.delete('/da4revit/v1/upgrader/files/:file_workitem_id', async(req, res, n
         const oauth = new OAuth(req.session);
         const oauth_client = oauth.get2LeggedClient();;
         const oauth_token = await oauth_client.authenticate();
-        await cancelWrokitem(workitemId, oauth_token.access_token);
+        await cancelWorkitem(workitemId, oauth_token.access_token);
         let workitemStatus = {
             'WorkitemId': workitemId,
             'Status': "Cancelled"

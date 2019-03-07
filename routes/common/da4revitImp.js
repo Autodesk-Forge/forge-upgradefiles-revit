@@ -92,7 +92,7 @@ function getWorkitemStatus(workItemId, access_token) {
 ///
 ///
 ///////////////////////////////////////////////////////////////////////
-function cancelWrokitem(workItemId, access_token) {
+function cancelWorkitem(workItemId, access_token) {
 
     return new Promise(function (resolve, reject) {
 
@@ -483,7 +483,7 @@ function createPostWorkitemBody(inputUrl, outputUrl, fileExtension, access_token
 module.exports = 
 { 
     getWorkitemStatus, 
-    cancelWrokitem, 
+    cancelWorkitem, 
     upgradeFile, 
     getLatestVersionInfo, 
     getNewCreatedStorageInfo, 

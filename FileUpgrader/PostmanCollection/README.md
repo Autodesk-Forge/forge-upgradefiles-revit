@@ -19,15 +19,15 @@ Postman collection to create App, define activity, and call the WorkItem.
 
 6. Compile and package the sample applications as noted [here](https://forge.autodesk.com/en/docs/design-automation/v3/tutorials/revit/step4-publish-appbundle/). You will need this to upload the app to Design Automation. Alternatively you may also download the packages from [FileUpgraderApp.zip](../PlugIn/FileUpgraderApp.zip).
 
-7. Create a nickname for your Forge App.
+7. Prepare your input and output url. You need to upload an old version of revit file as input Url, you can use [Revit2014.rvt](./Revit2014.rvt) for test.
 
-8. Publish your Design Automation appbundle.
+8. Before following the steps from collection, create a NickName for your App first.
 
-9. Publish your Design Automation activity.
+9. Follow Step from 0 ~ 7, this will create an AppBundle, define an Activity and post a WorkItem. 
 
-10. Prepare your input and output url. You need to upload an old version of revit file as input Url, you can use [Revit2014.rvt](./Revit2014.rvt) for test.
+10. You can use Get command to list the AppBundles/Activities.
 
-11. Post your Design Automation workitem.
+11. You can use Delete command to delete the AppBundle/Activity and start the workflow from Step 0 ~ 7 again.
 
 
 ## Usage
@@ -43,7 +43,7 @@ REST API documentation on Design Automation V3 can be found [here](https://forge
 
 ## Reference
 
-A step by step instructional video can be found [here](https://s3.amazonaws.com/revitio/documentation/PostmanSamples.mp4), the main steps should be similar.
+A more complicated step by step instructional video can be found [here](https://s3.amazonaws.com/revitio/documentation/PostmanSamples.mp4), the main steps should be similar.
 
 
 # Written by

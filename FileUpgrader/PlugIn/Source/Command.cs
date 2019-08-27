@@ -58,7 +58,8 @@ namespace ADNPlugin.Revit.FileUpgrader
         public void HandleApplicationInitializedEvent(object sender, Autodesk.Revit.DB.Events.ApplicationInitializedEventArgs e)
         {
             Application app = sender as Application;
-            DesignAutomationData data = new DesignAutomationData(app, "C:\\Program Files\\Autodesk\\Revit 2019\\Samples\\Entry Door Handle 2018.rfa");
+            String filePath = Directory.GetCurrentDirectory() + @"\Change to your local legacy RFA file for local test";
+            DesignAutomationData data = new DesignAutomationData(app, filePath );
             UpgradeFile(data);
         }
 

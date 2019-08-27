@@ -1,0 +1,37 @@
+{
+    "name": "design.automation-nodejs-revit.file.upgrader",
+    "description": "This sample demostrated how to upgrade Revit project/family/template to the latest version using Design Automation for Revit API, including upgrade one file or one folder.",
+    "repository": "https://github.com/Autodesk-Forge/design.automation-nodejs-revit.file.upgrader",
+    "logo": "https://avatars0.githubusercontent.com/u/8017462?v=3&s=200",
+    "keywords": [
+        "autodesk",
+        "forge",
+        "design automation"        
+    ],
+    "env": {
+        "FORGE_CLIENT_ID": {
+            "description": "Forge Client ID"
+        },
+        "FORGE_CLIENT_SECRET": {
+            "description": "Forge Client Secret"
+        },
+        "FORGE_CALLBACK_URL": {
+            "description": "Callback URL of your Forge app, required for 3-legged OAuth",
+            "value": "https://<<YOUR HEROKU APP NAME HERE>>.herokuapp.com/api/forge/callback/oauth"
+        },
+        "FORGE_WEBHOOK_URL": {
+            "description": "Callback URL of your webhook",
+            "value": "http://<<YOUR HEROKU APP NAME HERE>>.herokuapp.com/api/forge/callback/designautomation"
+        },
+        "DESIGN_AUTOMATION_NICKNAME": {
+            "description": "Revit Design Automation NickName, FORGE_CLIENT_ID by default",
+            "value": "<<YOUR FORGE_CLIENT_ID HERE>>"
+        },
+        "DESIGN_AUTOMATION_ACTIVITY_NAME": {
+            "description": "Revit Design Automation Activity Name",
+            "value": "FileUpgraderAppActivity+dev"
+        }
+    },
+    "website": "https://developer.autodesk.com/",
+    "success_url": "/"
+}

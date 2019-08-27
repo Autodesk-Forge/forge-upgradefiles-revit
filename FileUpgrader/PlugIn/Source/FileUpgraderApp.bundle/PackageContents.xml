@@ -3,7 +3,7 @@
   <Components Description="File upgrade app">
     <RuntimeRequirements OS="Win64"
                          Platform="Revit"
-                         SeriesMin="R2019"
+                         SeriesMin="R2018"
                          SeriesMax="R2019" />
     <ComponentEntry AppName="FileUgrader"
                     Version="1.0.0"

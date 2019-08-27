@@ -27,8 +27,7 @@ This sample demostrated how to upgrade Revit project/family/template to the late
 
 # Main Parts of The Work
 1. Create a Revit Plugin to be used within AppBundle of Design Automation for Revit. Please check [PlugIn](./FileUpgrader/PlugIn/) 
-2. Create your App, upload the AppBundle, define your Activity and test the workitem with the Postman collection under [Postman Collection](./FileUpgrader/PostmanCollection/) 
-
+2. Create your App, upload the AppBundle, define your Activity and test the workitem with the Postman collection under [Postman Collection](./FileUpgrader/PostmanCollection/), or you can refer ([https://youtu.be/1NCeH7acIko](https://youtu.be/1NCeH7acIko)) and simply use the `Configure` button in the Web Application to create the Appbundle & Activity.
 3. Create the Web App to call the workitem.
 
 # Web App Setup
@@ -70,9 +69,8 @@ Mac OSX/Linux (Terminal)
     export FORGE_CLIENT_SECRET=<<YOUR CLIENT SECRET>>
     export FORGE_CALLBACK_URL=<<YOUR CALLBACK URL>>
     export FORGE_WEBHOOK_URL=<<YOUR DESIGN AUTOMATION FOR REVIT CALLBACK URL>>
-    export REVIT_IO_NICK_NAME=<<YOUR DESIGN AUTOMATION FOR REVIT NICK NAME>>
-    export REVIT_IO_APP_NAME=<<YOUR DESIGN AUTOMATION FOR REVIT APP NAME>>
-    export REVIT_IO_ACTIVITY_NAME=<<YOUR DESIGN AUTOMATION FOR REVIT ACTIVITY NAME>>
+    export DESIGN_AUTOMATION_NICKNAME=<<YOUR DESIGN AUTOMATION FOR REVIT NICK NAME>>
+    export DESIGN_AUTOMATION_ACTIVITY_NAME=<<YOUR DESIGN AUTOMATION FOR REVIT ACTIVITY NAME>>
     npm start
 
 Windows (use **Node.js command line** from Start menu)
@@ -82,9 +80,8 @@ Windows (use **Node.js command line** from Start menu)
     set FORGE_CLIENT_SECRET=<<YOUR CLIENT SECRET>>
     set FORGE_CALLBACK_URL=<<YOUR CALLBACK URL>>
     set FORGE_WEBHOOK_URL=<<YOUR DESIGN AUTOMATION FOR REVIT CALLBACK URL>>
-    set REVIT_IO_NICK_NAME=<<YOUR DESIGN AUTOMATION FOR REVIT NICK NAME>>
-    set REVIT_IO_APP_NAME=<<YOUR DESIGN AUTOMATION FOR REVIT APP NAME>>
-    set REVIT_IO_ACTIVITY_NAME=<<YOUR DESIGN AUTOMATION FOR REVIT ACTIVITY NAME>>
+    set DESIGN_AUTOMATION_NICKNAME=<<YOUR DESIGN AUTOMATION FOR REVIT NICK NAME>>
+    set DESIGN_AUTOMATION_ACTIVITY_NAME=<<YOUR DESIGN AUTOMATION FOR REVIT ACTIVITY NAME>>
     npm start
 
 ### Using the app
@@ -93,30 +90,17 @@ Open the browser: [http://localhost:3000](http://localhost:3000), there are 2 wa
 
 1. Select Revit file in BIM360 Hub from Source File/Folder, Right Click and select `Upgrade to Revit 2019`. It will create a new version after successfully upgraded.
 2. Select Source Folder and Destination Folder, then click `Upgrade`, it will upgrade all the files under the folder to destinated folder.
+`Note`: When you deploy the app, you have to open the `Configure` button to create the AppBundle & Activity before running the Export|Import feature, please check the video for the steps at [https://youtu.be/1NCeH7acIko](https://youtu.be/1NCeH7acIko)
 
-## Main Backend API used
+## Deployment
 
-### File upgrade API based on Design Automation API at **routes/da4revit.js**
-- POST      /api/forge/da4revit/v1/upgrader/files/:source_file_url/folders/:destinate_folder_url
-- POST      /api/forge/da4revit/v1/upgrader/files
-- GET       /api/forge/da4revit/v1/upgrader/files/:file_workitem_id
-- DELETE    /api/forge/da4revit/v1/upgrader/files/:file_workitem_id
-- POST      /api/forge/callback/designautomation
+To deploy this application to Heroku, the **Callback URL** for Forge must use your `.herokuapp.com` address. After clicking on the button below, at the Heroku Create New App page, set your Client ID, Secret, Callback URL and Revit Design Automation variables for Forge.
 
-### File/Folder operation API based on Data Management API at **routes/datamanagement.js**
-- POST      /api/forge/datamanagement/v1/folder
-- DELETE    /api/forge//datamanagement/v1/folder/:folder_url
-- GET       /api/forge/datamanagement/v1
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/Autodesk-Forge/design.automation-nodejs-revit.file.upgrader)
 
-### User information API at **routes/user.js**
-- GET       /api/forge/user/v1/profile
+Watch [this video](https://www.youtube.com/watch?v=Oqa9O20Gj0c) as reference on how to deploy samples to Heroku.
 
-### OAuth information API at **routes/oauth.js**
-- GET       /api/forge/oauth/v1/url
-- GET       /api/forge/q/v1/signout
-- GET       /api/forge/oauth/v1/token
-- GET       /api/forge/oauth/v1/clientid
-- GET       /api/forge/callback/oauth
+
 
 ## Packages used
 
@@ -134,6 +118,9 @@ Documentation:
 Desktop APIs:
 
 - [Revit](https://knowledge.autodesk.com/support/revit-products/learn-explore/caas/simplecontent/content/my-first-revit-plug-overview.html)
+
+## Tips & Tricks
+- Before using the sample to call the workitem, you need to setup your Appbundle & Activity of Design Automation, you can follow my Postman script to understand the whole process, or you can simply use the `Configure` button in the Web Application to create the Appbundle & Activity([https://youtu.be/1NCeH7acIko](https://youtu.be/1NCeH7acIko)). 
 
 ## Troubleshooting
 
